@@ -1,0 +1,19 @@
+package templates
+
+import "github.com/guilycst/guigoes/internal/core/domain"
+
+templ Index(posts map[string]*domain.Post) {
+	<html>
+		<head>
+			<title>Guigoes</title>
+		</head>
+		<body>
+			<h1>Guigoes</h1>
+			<ul>
+				for path, p := range posts {
+					<li><a href={ templ.URL(path) }>{ p.Metadata.Title } </a></li>
+				}
+			</ul>
+		</body>
+	</html>
+}
