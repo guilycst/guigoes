@@ -7,6 +7,7 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 	ginadapter "github.com/awslabs/aws-lambda-go-api-proxy/gin"
 	"github.com/guilycst/guigoes/internal/handlers"
+	"github.com/guilycst/guigoes/internal/services"
 	"github.com/guilycst/guigoes/pkg"
 )
 
@@ -14,7 +15,8 @@ var ginLambda *ginadapter.GinLambda
 
 func init() {
 	pkg.LoadEnvFromOS()
-	gr := handlers.NewGinRouter(nil)
+	lps := services.NewLocalPostService()
+	gr := handlers.NewGinRouter(lps)
 	ginLambda = ginadapter.New(gr.Engine)
 }
 

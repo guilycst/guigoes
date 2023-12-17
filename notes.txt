@@ -1,0 +1,2 @@
+git log --format='{"hash":"%H","date-time":"%aI"}' --reverse -- ./posts/home/body.md | head -1 > created.json
+git log --format='{"hash":"%H","date-time":"%aI"}' -- ./posts/home/body.md | head -1 > created.json
