@@ -4,6 +4,7 @@ import (
 	"github.com/aws/aws-cdk-go/awscdk/v2"
 	"github.com/aws/aws-cdk-go/awscdk/v2/awsapigateway"
 	"github.com/aws/aws-cdk-go/awscdk/v2/awslambda"
+	"github.com/aws/aws-cdk-go/awscdk/v2/awss3assets"
 	"github.com/aws/aws-cdk-go/awscdklambdagoalpha/v2"
 
 	// "github.com/aws/aws-cdk-go/awscdk/v2/awssqs"
@@ -26,10 +27,33 @@ func GuigoesCdkStack(scope constructs.Construct, id string, props *CdkStackProps
 	lambda := awscdklambdagoalpha.NewGoFunction(stack, sptr("GuigoesLambda"), &awscdklambdagoalpha.GoFunctionProps{
 		Runtime: awslambda.Runtime_GO_1_X(),
 		Entry:   sptr("../../cmd/lambda/main.go"),
+		Environment: &map[string]*string{
+			*sptr("POSTS_PATH"): sptr("/opt/posts/"),
+		},
 	})
 
+	postsLayer := awslambda.NewLayerVersion(stack, sptr("GuigoesLayer"), &awslambda.LayerVersionProps{
+		Code: awslambda.AssetCode_FromAsset(sptr("../../"), &awss3assets.AssetOptions{
+			Exclude: &[]*string{
+				sptr("cmd/**/*"),
+				sptr("deployments/**/*"),
+				sptr("internal/**/*"),
+				sptr("pkg/**/*"),
+				sptr("web/**/*"),
+				sptr("*.mod"),
+				sptr("*.sum"),
+				sptr("*.work"),
+				sptr(".env"),
+				sptr(".gitignore"),
+			},
+		}),
+	})
+
+	lambda.AddLayers(postsLayer)
+
 	api := awsapigateway.NewLambdaRestApi(stack, sptr("GuigoesApi"), &awsapigateway.LambdaRestApiProps{
-		Handler: lambda,
+		Handler:          lambda,
+		BinaryMediaTypes: &[]*string{sptr("*/*")},
 	})
 
 	awscdk.NewCfnOutput(stack, sptr("api-gateway-endpoint"),

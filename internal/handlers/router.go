@@ -12,6 +12,7 @@ import (
 	"github.com/gomarkdown/markdown/html"
 	"github.com/gomarkdown/markdown/parser"
 	"github.com/guilycst/guigoes/internal/core/domain"
+	"github.com/guilycst/guigoes/pkg"
 	"github.com/guilycst/guigoes/web/templates"
 )
 
@@ -29,12 +30,14 @@ func PostAsset(c *gin.Context) {
 		c.AbortWithStatus(404)
 	}
 
-	refUrl, err := url.Parse(ref)
+	url, err := url.Parse(ref)
 	if err != nil {
 		c.AbortWithError(500, err)
 	}
+
 	assetName := c.Param("asset")
-	var postAssetPath = "." + refUrl.Path + "/assets/" + assetName
+	var postAssetPath = pkg.POSTS_PATH + filepath.Base(url.Path) + "/assets/" + assetName
+	log.Println("Serving asset: ", postAssetPath)
 	c.File(postAssetPath)
 	c.Status(200)
 }
@@ -66,8 +69,8 @@ func mdToHTML(md []byte) []byte {
 }
 
 func getPost(postName string) (*domain.Post, error) {
-	var postMd = "./posts/" + postName + "/body.md"
-	var postMeta = "./posts/" + postName + "/metadata.json"
+	var postMd = pkg.POSTS_PATH + postName + "/body.md"
+	var postMeta = pkg.POSTS_PATH + postName + "/metadata.json"
 	var post = &domain.Post{
 		Dir: filepath.Dir(postMd),
 	}
@@ -93,26 +96,25 @@ func getPost(postName string) (*domain.Post, error) {
 }
 
 func Index(c *gin.Context) {
-	var root = "./posts/"
 
-	mds, err := filepath.Glob(root + "**/*.md")
+	mds, err := filepath.Glob(pkg.POSTS_PATH + "**/*.md")
 	if err != nil {
 		c.AbortWithError(500, err)
 	}
 
-	metas, err := filepath.Glob(root + "**/metadata.json")
+	metas, err := filepath.Glob(pkg.POSTS_PATH + "**/metadata.json")
 	if err != nil {
 		c.AbortWithError(500, err)
 	}
 
 	posts := make(map[string]*domain.Post)
 	for _, md := range mds {
-		dir := filepath.Dir(md)
-		posts[dir] = &domain.Post{Dir: filepath.Base(md)}
+		dir := "/posts/" + filepath.Base(filepath.Dir(md))
+		posts[dir] = &domain.Post{Dir: dir}
 	}
 
 	for _, meta := range metas {
-		dir := filepath.Dir(meta)
+		dir := "/posts/" + filepath.Base(filepath.Dir(meta))
 		post, ok := posts[dir]
 		if !ok {
 			log.Println("Dangling metadata.json: ", meta)

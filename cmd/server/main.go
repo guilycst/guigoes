@@ -2,7 +2,12 @@ package main
 
 import (
 	"github.com/guilycst/guigoes/internal/handlers"
+	"github.com/guilycst/guigoes/pkg"
 )
+
+func init() {
+	pkg.LoadEnvFile()
+}
 
 func main() {
 	r := handlers.NewGin()

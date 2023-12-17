@@ -7,11 +7,13 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 	ginadapter "github.com/awslabs/aws-lambda-go-api-proxy/gin"
 	"github.com/guilycst/guigoes/internal/handlers"
+	"github.com/guilycst/guigoes/pkg"
 )
 
 var ginLambda *ginadapter.GinLambda
 
 func init() {
+	pkg.LoadEnvFromOS()
 	r := handlers.NewGin()
 	ginLambda = ginadapter.New(r)
 }
