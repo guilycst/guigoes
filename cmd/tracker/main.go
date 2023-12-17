@@ -12,7 +12,7 @@ import (
 	"github.com/guilycst/guigoes/pkg"
 )
 
-const postCommitsDatetimeHashCmd = `log --format=%%aI_%%H --reverse -- %s`
+const postCommitsDatetimeHashCmd = `log --format=%%aI_%%H -- %s`
 
 var postsService ports.PostService
 
