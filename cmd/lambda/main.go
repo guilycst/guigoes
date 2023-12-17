@@ -14,8 +14,8 @@ var ginLambda *ginadapter.GinLambda
 
 func init() {
 	pkg.LoadEnvFromOS()
-	r := handlers.NewGin()
-	ginLambda = ginadapter.New(r)
+	gr := handlers.NewGinRouter(nil)
+	ginLambda = ginadapter.New(gr.Engine)
 }
 
 func Handler(ctx context.Context, req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
