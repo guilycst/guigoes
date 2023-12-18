@@ -21,3 +21,4 @@
 go.work
 .env
 **/git-log.track
+tmp

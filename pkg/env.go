@@ -12,6 +12,7 @@ var (
 	GITHUB_API_HOST string
 	REPO_OWNER      string
 	POSTS_REPO      string
+	DIST_PATH       string
 )
 
 func LoadEnvFile() {
@@ -25,4 +26,5 @@ func LoadEnvFromOS() {
 	GITHUB_API_HOST = os.Getenv("GITHUB_API_HOST")
 	REPO_OWNER = os.Getenv("REPO_OWNER")
 	POSTS_REPO = os.Getenv("POSTS_REPO")
+	DIST_PATH = os.Getenv("DIST_PATH")
 }

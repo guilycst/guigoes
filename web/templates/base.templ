@@ -1,0 +1,28 @@
+package templates
+
+import "github.com/guilycst/guigoes/web/templates/state"
+
+templ Base(bs state.BaseState) {
+	<!DOCTYPE html>
+	<html lang="pt-BR">
+		<head>
+			<title>{ bs.Title }</title>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<meta name="description" content="A developer blog sharing insights, tutorials, and tips on programming and web development."/>
+			<meta name="author" content="Guilherme de Castro"/>
+			<script src="https://unpkg.com/htmx.org@1.9.9" integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX" crossorigin="anonymous"></script>
+			<link rel="stylesheet" href="output.css" defer/>
+			<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
+			<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/>
+			<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"/>
+			<link rel="manifest" href="site.webmanifest"/>
+			<link rel="preconnect" href="https://fonts.googleapis.com" defer/>
+			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin defer/>
+			<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;1,300&display=swap" rel="stylesheet" defer/>
+		</head>
+		<body>
+			@bs.Body
+		</body>
+	</html>
+}
