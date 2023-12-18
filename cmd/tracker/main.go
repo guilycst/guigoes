@@ -22,7 +22,7 @@ func init() {
 }
 
 func main() {
-	idx, err := postsService.Index()
+	idx, err := postsService.Posts()
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -21,7 +21,7 @@ func NewLocalPostService() ports.PostService {
 	return &LocalPostService{}
 }
 
-func (lps LocalPostService) Index() ([]*domain.Post, error) {
+func (lps LocalPostService) Posts() ([]*domain.Post, error) {
 	mds, err := filepath.Glob(pkg.POSTS_PATH + "**/*.md")
 	if err != nil {
 		return nil, err
@@ -76,7 +76,7 @@ func (lps LocalPostService) GetPost(postName string) (*domain.Post, error) {
 	var postMd = pkg.POSTS_PATH + postName + "/body.md"
 	var postMeta = pkg.POSTS_PATH + postName + "/metadata.json"
 	var post = &domain.Post{
-		Dir:  filepath.Dir(postMd),
+		Dir:  "/posts/" + filepath.Base(filepath.Dir(postMeta)),
 		Name: postName,
 	}
 

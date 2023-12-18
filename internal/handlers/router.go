@@ -124,7 +124,7 @@ func getLanguage(c *gin.Context) string {
 
 func (gr GinRouter) Index(c *gin.Context) {
 
-	posts, err := gr.PostSrv.Index()
+	posts, err := gr.PostSrv.Posts()
 	if err != nil {
 		c.AbortWithError(500, err)
 		return
