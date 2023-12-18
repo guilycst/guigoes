@@ -1,3 +1,48 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.post {
+}
+
+.post h1 { @apply text-4xl; }
+.post h2 { @apply text-3xl; }
+.post h3 { @apply text-2xl; }
+.post h4 { @apply text-xl; }
+.post h5 { @apply text-lg; }
+.post h6 { @apply text-base; }
+
+.post p { @apply mb-4; }
+
+.post a { @apply text-blue-500; }
+.post a:hover { @apply underline; }
+
+.post ul, .post ol { @apply mb-4; }
+.post li { @apply mb-2; }
+
+.post blockquote { @apply border-l-2 pl-4 border-gray-300; }
+
+.post code { @apply font-mono bg-gray-100 py-1 px-2 border border-gray-300; }
+
+.post hr { @apply border-t-2 border-gray-300 my-4; }
+
+.post img { @apply max-w-full h-auto; }
+
+.post table { @apply table-auto w-full mb-4; }
+.post th, .post td { @apply border border-gray-300 py-2 px-4 text-left; }
+
+.post em { @apply italic; }
+.post strong { @apply font-bold; }
+
+.post s { @apply line-through; }
+
+.post pre { @apply bg-gray-100 p-4 border border-gray-300 overflow-x-auto; }
+
+.post .task-list-item { @apply list-none; }
+
+.post dl { @apply mb-4; }
+.post dt { @apply font-bold; }
+
+.post .footnote { @apply text-sm; }
+
+.post .my-custom-class { /* your styles here */ }

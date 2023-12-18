@@ -5,23 +5,33 @@ import "github.com/guilycst/guigoes/web/templates/state"
 templ Index(is state.IndexState) {
 	//using tailwindcss
 	//container
-	<main class="flex flex-col gap-4 place-content-center pt-[50px]">
-		for _, post := range is.Posts {
-			//blog post
-			<div>
-				//post date
-				<div class="text-sm font-thin">{ post.Metadata.Author } | { LocalizeTime(post.CreatedAt, is.Language) }</div>
-				//post title
-				<div class="mb-[3px]">
-					<h2 class="font-black">JSON is slow: Here's What's faster</h2>
-				</div>
-				//post description
-				<div class="text-base">
-					<p>
-						JSON is the standard way to serialize data, but it's not the fastest or most compact way to store information. See how JSON stacks up to other formats and how to improve it.
-					</p>
-				</div>
+	for i, post := range is.Posts {
+		//blog post
+		<div>
+			//post date
+			<div class="text-sm font-thin">{ post.Metadata.Author } | { LocalizeTime(post.CreatedAt, is.Language) }</div>
+			//post title
+			<div class="mb-[3px]">
+				<h2 class="font-black">
+					<a href={ templ.URL(post.Dir) } hx-get={ post.Dir + "?fragment=1" } hx-target="#main">{ post.Metadata.Title }</a>
+				</h2>
 			</div>
+			//post description
+			<div class="text-base">
+				<p>
+					{ post.Metadata.Description }
+				</p>
+			</div>
+			<div class="text-sm font-thin">
+				for _, tag := range post.Metadata.Tags {
+					//post tags
+					<span class="mr-[5px] rounded-full bg-zinc-300 px-[8px]">{ tag }</span>
+				}
+			</div>
+		</div>
+		if i != len(is.Posts)-1 {
+			//post separator
+			<hr class="my-[10px] border-zinc-300"/>
 		}
-	</main>
+	}
 }

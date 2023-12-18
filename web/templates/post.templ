@@ -4,9 +4,6 @@ import "github.com/guilycst/guigoes/internal/core/domain"
 
 templ Post(post *domain.Post, content templ.Component) {
 	<div class="post">
-		<h2>{ post.Metadata.Title }</h2>
-		<div class="post-content">
-			@content
-		</div>
+		@content
 	</div>
 }

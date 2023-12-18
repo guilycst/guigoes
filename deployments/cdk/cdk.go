@@ -28,22 +28,30 @@ func GuigoesCdkStack(scope constructs.Construct, id string, props *CdkStackProps
 		Entry:   sptr("../../cmd/lambda/main.go"),
 		Environment: &map[string]*string{
 			*sptr("POSTS_PATH"): sptr("/opt/posts/"),
+			*sptr("DIST_PATH"):  sptr("/opt/web/dist"),
 		},
 	})
 
 	postsLayer := awslambda.NewLayerVersion(stack, sptr("GuigoesLayer"), &awslambda.LayerVersionProps{
 		Code: awslambda.AssetCode_FromAsset(sptr("../../"), &awss3assets.AssetOptions{
 			Exclude: &[]*string{
-				sptr("cmd/**/*"),
-				sptr("deployments/**/*"),
-				sptr("internal/**/*"),
-				sptr("pkg/**/*"),
-				sptr("web/**/*"),
+				sptr("cmd"),
+				sptr("deployments"),
+				sptr("internal"),
+				sptr("pkg"),
+				sptr("tmp"),
+				sptr("web/templates"),
+				sptr("web/css"),
 				sptr("*.mod"),
 				sptr("*.sum"),
 				sptr("*.work"),
 				sptr(".env"),
 				sptr(".gitignore"),
+				sptr("*.go"),
+				sptr(".air.toml"),
+				sptr("*.sh"),
+				sptr("*.js"),
+				sptr("makefile"),
 			},
 		}),
 	})

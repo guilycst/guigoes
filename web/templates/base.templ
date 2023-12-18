@@ -12,11 +12,11 @@ templ Base(bs state.BaseState) {
 			<meta name="description" content="A developer blog sharing insights, tutorials, and tips on programming and web development."/>
 			<meta name="author" content="Guilherme de Castro"/>
 			<script src="https://unpkg.com/htmx.org@1.9.9" integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX" crossorigin="anonymous"></script>
-			<link rel="stylesheet" href="output.css" defer/>
-			<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
-			<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png"/>
-			<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png"/>
-			<link rel="manifest" href="site.webmanifest"/>
+			<link rel="stylesheet" href="/output.css" defer/>
+			<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+			<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+			<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+			<link rel="manifest" href="/site.webmanifest"/>
 			<link rel="preconnect" href="https://fonts.googleapis.com" defer/>
 			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin defer/>
 			<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;1,300&display=swap" rel="stylesheet" defer/>
@@ -27,14 +27,13 @@ templ Base(bs state.BaseState) {
 					<div class="flex items-center justify-between h-16">
 						<div class="flex items-center">
 							<div class="flex-shrink-0">
-								<a href="#" class="text-white text-2xl font-bold">GG</a>
+								<a href="/" class="text-white text-2xl font-bold">GG</a>
 							</div>
 							<div class="hidden md:block">
 								<div class="ml-10 flex items-baseline space-x-4">
-									<a href="#" class="text-zinc-300 hover:bg-zinc-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
-									<a href="#" class="text-zinc-300 hover:bg-zinc-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">About</a>
-									<a href="#" class="text-zinc-300 hover:bg-zinc-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Services</a>
-									<a href="#" class="text-zinc-300 hover:bg-zinc-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+									<a href="/" class="text-zinc-300 hover:bg-zinc-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+									<a href="/" class="text-zinc-300 hover:bg-zinc-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">About</a>
+									<a href="/" class="text-zinc-300 hover:bg-zinc-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Contact</a>
 								</div>
 							</div>
 						</div>
@@ -42,7 +41,9 @@ templ Base(bs state.BaseState) {
 				</div>
 			</nav>
 			<div class="m-auto max-w-prose">
-				@bs.Body
+				<main id="main" class="flex flex-col gap-4 place-content-center pt-[50px]">
+					@bs.Body
+				</main>
 			</div>
 		</body>
 	</html>

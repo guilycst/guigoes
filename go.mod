@@ -10,14 +10,18 @@ require (
 
 require (
 	github.com/Masterminds/semver/v3 v3.2.1 // indirect
+	github.com/alecthomas/chroma/v2 v2.2.0 // indirect
 	github.com/aws/constructs-go/constructs/v10 v10.3.0 // indirect
 	github.com/aws/constructs-go/constructs/v3 v3.4.232 // indirect
 	github.com/aws/jsii-runtime-go v1.93.0 // indirect
 	github.com/cdklabs/awscdk-asset-awscli-go/awscliv1/v2 v2.2.201 // indirect
 	github.com/cdklabs/awscdk-asset-kubectl-go/kubectlv20/v2 v2.1.2 // indirect
 	github.com/cdklabs/awscdk-asset-node-proxy-agent-go/nodeproxyagentv6/v2 v2.0.1 // indirect
+	github.com/dlclark/regexp2 v1.7.0 // indirect
 	github.com/golang-module/carbon/v2 v2.2.14 // indirect
 	github.com/stretchr/testify v1.8.4 // indirect
+	github.com/yuin/goldmark v1.6.0 // indirect
+	github.com/yuin/goldmark-highlighting/v2 v2.0.0-20230729083705-37449abec8cc // indirect
 )
 
 require (

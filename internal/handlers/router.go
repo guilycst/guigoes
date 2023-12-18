@@ -2,15 +2,16 @@ package handlers
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"net/url"
 	"path/filepath"
 	"strings"
 
-	"github.com/gin-gonic/contrib/gzip"
 	"github.com/gin-gonic/gin"
 	"github.com/guilycst/guigoes/internal/core/domain"
 	"github.com/guilycst/guigoes/internal/ports"
+	"github.com/guilycst/guigoes/pkg"
 	"github.com/guilycst/guigoes/web/templates"
 	"github.com/guilycst/guigoes/web/templates/state"
 )
@@ -25,7 +26,7 @@ func NewGinRouter(ps ports.PostService) *GinRouter {
 		Engine:  gin.Default(),
 		PostSrv: ps,
 	}
-	router.Engine.Use(gzip.Gzip(gzip.DefaultCompression))
+	//router.Engine.Use(gzip.Gzip(gzip.DefaultCompression))
 	router.registerRoutes()
 	return router
 }
@@ -36,14 +37,14 @@ func (gr GinRouter) registerRoutes() {
 	r.GET("/posts/:post", gr.Post)
 	r.GET("/posts/assets/:asset", gr.PostAsset)
 	//Static files that should be served at root
-	r.StaticFile("/output.css", "./web/dist/output.css")
-	r.StaticFile("/site.webmanifest", "./web/dist/site.webmanifest")
-	r.StaticFile("/favicon.ico", "./web/dist/favicon.ico")
-	r.StaticFile("/favicon-32x32.png", "./web/dist/favicon-32x32.png")
-	r.StaticFile("/favicon-16x16.png", "./web/dist/favicon-16x16.png")
-	r.StaticFile("/apple-touch-icon.png", "./web/dist/apple-touch-icon.png")
-	r.StaticFile("/android-chrome-512x512.png", "./web/dist/android-chrome-512x512.png")
-	r.StaticFile("/android-chrome-192x192.png", "./web/dist/android-chrome-192x192.png")
+	r.StaticFile("/output.css", fmt.Sprintf("%s/output.css", pkg.DIST_PATH))
+	r.StaticFile("/site.webmanifest", fmt.Sprintf("%s/site.webmanifest", pkg.DIST_PATH))
+	r.StaticFile("/favicon.ico", fmt.Sprintf("%s/favicon.ico", pkg.DIST_PATH))
+	r.StaticFile("/favicon-32x32.png", fmt.Sprintf("%s/favicon-32x32.png", pkg.DIST_PATH))
+	r.StaticFile("/favicon-16x16.png", fmt.Sprintf("%s/favicon-16x16.png", pkg.DIST_PATH))
+	r.StaticFile("/apple-touch-icon.png", fmt.Sprintf("%s/apple-touch-icon.png", pkg.DIST_PATH))
+	r.StaticFile("/android-chrome-512x512.png", fmt.Sprintf("%s/android-chrome-512x512.png", pkg.DIST_PATH))
+	r.StaticFile("/android-chrome-192x192.png", fmt.Sprintf("%s/android-chrome-192x192.png", pkg.DIST_PATH))
 }
 
 func (gr GinRouter) PostAsset(c *gin.Context) {
@@ -84,8 +85,22 @@ func (gr GinRouter) Post(c *gin.Context) {
 		return
 	}
 
-	postComponent := templates.Unsafe(string(post.Content))
-	templates.Post(post, postComponent).Render(c.Request.Context(), c.Writer)
+	c.Header("Last-Modified", post.UpdatedAt.ToRfc7231String())
+	frag := c.Request.URL.Query().Get("fragment") == "1"
+	postContent := templates.Unsafe(string(post.Content))
+	postFragment := templates.Post(post, postContent)
+	if frag {
+		c.Header("HX-Replace-Url", post.Dir)
+		postFragment.Render(c.Request.Context(), c.Writer)
+		c.Status(200)
+		return
+	}
+
+	templates.Base(state.BaseState{
+		State: state.State{Language: getLanguage(c)},
+		Title: post.Metadata.Title,
+		Body:  postFragment,
+	}).Render(c.Request.Context(), c.Writer)
 	c.Status(200)
 }
 

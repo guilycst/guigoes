@@ -1,6 +1,6 @@
 {
-    "title": "Home",
-    "description": "This is the home page",
-    "Author": "John Doe",
+    "title": "JSON is slow",
+    "description": "JSON is the standard way to serialize data, but it's not the fastest or most compact way to store information. See how JSON stacks up to other formats and how to improve it.",
+    "author": "John Doe",
     "tags": ["home", "index", "main"]
 }

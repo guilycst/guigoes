@@ -15,7 +15,8 @@ type Post struct {
 }
 
 type Metadata struct {
-	Title  string   `json:"title"`
-	Author string   `json:"author"`
-	Tags   []string `json:"tags"`
+	Title       string   `json:"title"`
+	Author      string   `json:"author"`
+	Description string   `json:"description"`
+	Tags        []string `json:"tags"`
 }
