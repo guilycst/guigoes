@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/url"
 	"path/filepath"
+	"strings"
 
 	"github.com/gin-gonic/contrib/gzip"
 	"github.com/gin-gonic/gin"
@@ -88,16 +89,40 @@ func (gr GinRouter) Post(c *gin.Context) {
 	c.Status(200)
 }
 
+func getLanguage(c *gin.Context) string {
+	header := c.Request.Header.Get("Accept-Language")
+	if header == "" {
+		return "en"
+	}
+
+	langs := strings.Split(header, ";")
+	if len(langs) == 0 {
+		return "en"
+	}
+
+	for _, lang := range langs {
+		return strings.Split(lang, ",")[1]
+	}
+
+	return "en"
+}
+
 func (gr GinRouter) Index(c *gin.Context) {
-	idx, err := gr.PostSrv.Index()
+
+	posts, err := gr.PostSrv.Index()
 	if err != nil {
 		c.AbortWithError(500, err)
 		return
 	}
 
+	idxState := state.IndexState{
+		State: state.State{Language: getLanguage(c)},
+		Posts: posts,
+	}
+
 	bs := state.BaseState{
 		Title: "Guigoes - Home",
-		Body:  templates.Index(idx),
+		Body:  templates.Index(idxState),
 	}
 	templates.Base(bs).Render(c.Request.Context(), c.Writer)
 	c.Status(200)

@@ -6,6 +6,7 @@ tailwindcss:
 build:
 	make tgen
 	make tailwindcss
+	go run ./cmd/tracker/main.go
 	go build -gcflags "all=-N -l" -o ./tmp/guigoes ./cmd/server/
 run:
 	air

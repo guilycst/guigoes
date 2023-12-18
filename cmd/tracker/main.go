@@ -27,8 +27,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	for path := range idx {
-		bodyDir := "." + path
+	for _, p := range idx {
+		bodyDir := "." + p.Dir
 		bodyPath := bodyDir + "/body.md"
 		tracker := bodyDir + "/git-log.track"
 		cmdParams := fmt.Sprintf(postCommitsDatetimeHashCmd, bodyPath)
