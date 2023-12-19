@@ -91,6 +91,7 @@ func (gr GinRouter) Post(c *gin.Context) {
 	postFragment := templates.Post(post, postContent)
 	if frag {
 		c.Header("HX-Replace-Url", post.Dir)
+		c.Header("HX-Push-Url", post.Dir)
 		postFragment.Render(c.Request.Context(), c.Writer)
 		c.Status(200)
 		return

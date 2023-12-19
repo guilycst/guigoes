@@ -75,8 +75,9 @@ func (lps LocalPostService) Posts() ([]*domain.Post, error) {
 func (lps LocalPostService) GetPost(postName string) (*domain.Post, error) {
 	var postMd = pkg.POSTS_PATH + postName + "/body.md"
 	var postMeta = pkg.POSTS_PATH + postName + "/metadata.json"
+	path := "/posts/" + postName
 	var post = &domain.Post{
-		Dir:  "/posts/" + filepath.Base(filepath.Dir(postMeta)),
+		Dir:  path,
 		Name: postName,
 	}
 

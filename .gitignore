@@ -22,3 +22,4 @@ go.work
 .env
 **/git-log.track
 tmp
+web/dist/output.css
