@@ -13,3 +13,9 @@ run:
 tgen:
 	templ fmt ./web/templates
 	templ generate
+deploy:
+	cd ./deployments/cdk; \
+	cdk deploy
+synth:
+	cd ./deployments/cdk; \
+	cdk synth
