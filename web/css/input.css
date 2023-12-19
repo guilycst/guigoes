@@ -2,47 +2,163 @@
 @tailwind components;
 @tailwind utilities;
 
-.post {
+.post {}
+
+.post h1 {
+    @apply text-4xl pb-3 mb-4 pl-6 -ml-6 font-black;
 }
 
-.post h1 { @apply text-4xl; }
-.post h2 { @apply text-3xl; }
-.post h3 { @apply text-2xl; }
-.post h4 { @apply text-xl; }
-.post h5 { @apply text-lg; }
-.post h6 { @apply text-base; }
+.post h2 {
+    @apply text-3xl pb-2 mb-3 pl-6 -ml-6 font-extrabold;
+}
 
-.post p { @apply mb-4; }
+.post h3 {
+    @apply text-2xl pb-1 mb-2 pl-6 -ml-6 font-bold;
+}
 
-.post a { @apply text-blue-500; }
-.post a:hover { @apply underline; }
+.post h4 {
+    @apply text-xl pb-1 mb-2 pl-6 -ml-6 font-semibold;
+}
 
-.post ul, .post ol { @apply mb-4; } 
-.post li { @apply mb-2; }
+.post h5 {
+    @apply text-lg pb-1 mb-2 pl-6 -ml-6 font-medium;
+}
 
-.post blockquote { @apply border-l-2 pl-4 border-gray-300; }
+.post h6 {
+    @apply text-base pb-1 mb-2 pl-6 -ml-6 font-normal;
+}
 
-.post code { @apply bg-gray-100 py-1 px-2 border border-gray-300; }
+.post p {
+    @apply mb-4;
+}
 
-.post hr { @apply border-t-2 border-gray-300 my-4; }
+.post h1 a,
+.post h2 a,
+.post h3 a,
+.post h4 a,
+.post h5 a,
+.post h6 a {
+    @apply text-zinc-500 text-base font-medium float-left -ml-6 leading-loose invisible;
+}
 
-.post img { @apply max-w-full h-auto; }
+.post h1:hover a,
+.post h1.hover a,
+.post h2:hover a,
+.post h2.hover a,
+.post h3:hover a,
+.post h3.hover a,
+.post h4:hover a,
+.post h4.hover a,
+.post h5:hover a,
+.post h5.hover a,
+.post h6:hover a,
+.post h6.hover a {
+    @apply visible;
+}
 
-.post table { @apply table-auto w-full mb-4; }
-.post th, .post td { @apply border border-gray-300 py-2 px-4 text-left; }
+/* .post h2 a { 
+    @apply text-zinc-500 text-base font-medium float-left -ml-6 leading-loose invisible; 
+}
 
-.post em { @apply italic; }
-.post strong { @apply font-bold; }
+.post h3 a { 
+    @apply text-zinc-500 text-base font-medium float-left -ml-6 leading-loose invisible; 
+}
 
-.post s { @apply line-through; }
+.post h4 a { 
+    @apply text-zinc-500 text-base font-medium float-left -ml-6 leading-loose invisible; 
+}
 
-.post pre { @apply bg-gray-100 p-4 border border-gray-300 overflow-x-auto; }
+.post h5 a { 
+    @apply text-zinc-500 text-base font-medium float-left -ml-6 leading-loose invisible; 
+}
 
-.post .task-list-item { @apply list-none; }
+.post h6 a { 
+    @apply text-zinc-500 text-base font-medium float-left leading-loose; 
+    padding-left: -24px;
+} */
 
-.post dl { @apply mb-4; }
-.post dt { @apply font-bold; }
+.post a:hover {
+    @apply underline;
+    visibility: visible;
+}
 
-.post .footnote { @apply text-sm; }
+.post ul {
+    @apply mb-4 pl-6 list-disc;
+}
 
-.post .my-custom-class { /* your styles here */ }
+.post ul ul {
+    @apply mb-1 list-[circle];
+}
+
+.post ul ul ul {
+    @apply mb-1 list-[square];
+}
+
+.post ol {
+    @apply mb-4 pl-6 list-decimal;
+}
+
+.post li {
+    @apply mb-1 list-item;
+}
+
+.post blockquote {
+    @apply border-l-2 pl-4 border-gray-300;
+}
+
+.post code {
+    @apply bg-gray-100 py-1 px-2 border border-gray-300;
+}
+
+.post hr {
+    @apply border-t-2 border-gray-300 my-4;
+}
+
+.post img {
+    @apply max-w-full h-auto;
+}
+
+.post table {
+    @apply table-auto w-full mb-4;
+}
+
+.post th,
+.post td {
+    @apply border border-gray-300 py-2 px-4 text-left;
+}
+
+.post em {
+    @apply italic;
+}
+
+.post strong {
+    @apply font-bold;
+}
+
+.post s {
+    @apply line-through;
+}
+
+.post pre {
+    @apply bg-gray-100 p-4 mb-4 border border-gray-300 overflow-x-auto;
+}
+
+.post .task-list-item {
+    @apply list-none;
+}
+
+.post dl {
+    @apply mb-4;
+}
+
+.post dt {
+    @apply font-bold;
+}
+
+.post .footnote {
+    @apply text-sm;
+}
+
+.post .my-custom-class {
+    /* your styles here */
+}
