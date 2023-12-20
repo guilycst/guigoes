@@ -36,6 +36,7 @@ func (gr GinRouter) registerRoutes() {
 	r.GET("/", gr.Index)
 	r.GET("/posts/:post", gr.Post)
 	r.GET("/posts/assets/:asset", gr.PostAsset)
+	r.POST("/search", gr.SearchPosts)
 	//Static files that should be served at root
 	r.StaticFile("/output.css", fmt.Sprintf("%s/output.css", pkg.DIST_PATH))
 	r.StaticFile("/site.webmanifest", fmt.Sprintf("%s/site.webmanifest", pkg.DIST_PATH))
@@ -45,6 +46,56 @@ func (gr GinRouter) registerRoutes() {
 	r.StaticFile("/apple-touch-icon.png", fmt.Sprintf("%s/apple-touch-icon.png", pkg.DIST_PATH))
 	r.StaticFile("/android-chrome-512x512.png", fmt.Sprintf("%s/android-chrome-512x512.png", pkg.DIST_PATH))
 	r.StaticFile("/android-chrome-192x192.png", fmt.Sprintf("%s/android-chrome-192x192.png", pkg.DIST_PATH))
+}
+
+func (gr GinRouter) SearchPosts(c *gin.Context) {
+	search := c.Request.FormValue("search")
+	if search == "" {
+
+		ref := c.Request.Header.Get("Referer")
+		if ref != "" {
+			url, err := url.Parse(ref)
+			if err != nil {
+				c.AbortWithError(500, err)
+				return
+			}
+
+			post := strings.TrimPrefix(url.Path, "/posts/")
+			if post != url.Path {
+				gr.GetPostByName(post, true, c)
+				return
+			}
+		}
+
+		posts, err := gr.PostSrv.Posts()
+		if err != nil {
+			c.AbortWithError(500, err)
+			return
+		}
+
+		idxState := state.IndexState{
+			State: state.State{Language: getLanguage(c)},
+			Posts: posts,
+		}
+
+		templates.Index(idxState).Render(c.Request.Context(), c.Writer)
+		c.Status(200)
+		return
+	}
+
+	posts, err := gr.PostSrv.SearchPosts(search)
+	if err != nil {
+		c.AbortWithError(500, err)
+		return
+	}
+
+	idxState := state.IndexState{
+		State: state.State{Language: getLanguage(c)},
+		Posts: posts,
+	}
+
+	templates.Index(idxState).Render(c.Request.Context(), c.Writer)
+	c.Status(200)
 }
 
 func (gr GinRouter) PostAsset(c *gin.Context) {
@@ -79,6 +130,11 @@ func (gr GinRouter) PostAsset(c *gin.Context) {
 
 func (gr GinRouter) Post(c *gin.Context) {
 	postName := c.Param("post")
+	frag := c.Request.URL.Query().Get("fragment") == "1"
+	gr.GetPostByName(postName, frag, c)
+}
+
+func (gr GinRouter) GetPostByName(postName string, frag bool, c *gin.Context) {
 	post, err := gr.PostSrv.GetPost(postName)
 	if err != nil {
 		c.AbortWithError(500, err)
@@ -86,7 +142,6 @@ func (gr GinRouter) Post(c *gin.Context) {
 	}
 
 	c.Header("Last-Modified", post.UpdatedAt.ToRfc7231String())
-	frag := c.Request.URL.Query().Get("fragment") == "1"
 	postContent := templates.Unsafe(string(post.Content))
 	postFragment := templates.Post(post, postContent)
 	if frag {

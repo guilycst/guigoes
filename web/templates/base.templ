@@ -24,13 +24,17 @@ templ Base(bs state.BaseState) {
 		<body class="bg-zinc-900 text-zinc-300 text-xl">
 			<nav class="bg-zinc-100 dark:bg-zinc-950 mb-[10px]">
 				<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-					<div class="flex items-center justify-between h-16">
+					<div class="flex items-center justify-between h-16 m-auto max-w-prose">
 						<div class="flex items-center">
 							<div class="flex-shrink-0">
 								<a href="/" class="text-white text-2xl font-bold">GG</a>
 							</div>
 							<div class="hidden md:block">
 								<div class="ml-10 flex items-baseline space-x-4">
+									<form autocomplete="off">
+										<input autocomplete="off" name="hidden" type="text" class="hidden"/>
+										<input autocomplete="off" class="bg-zinc-900 text-sm font-medium text-zinc-300 rounded-full" type="text" name="search" id="search" placeholder="Search" hx-trigger="keyup changed delay:500ms" hx-post="/search" hx-target="#main" hx-swap="innerHTML"/>
+									</form>
 									<a href="/" class="text-zinc-300 hover:bg-zinc-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
 									<a href="/" class="text-zinc-300 hover:bg-zinc-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">About</a>
 									<a href="/" class="text-zinc-300 hover:bg-zinc-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Contact</a>
