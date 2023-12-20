@@ -21,6 +21,57 @@ func NewLocalPostService() ports.PostService {
 	return &LocalPostService{}
 }
 
+func (lps LocalPostService) PostsForIndexing() ([]*domain.Post, error) {
+	mds, err := filepath.Glob(pkg.POSTS_PATH + "**/*.md")
+	if err != nil {
+		return nil, err
+	}
+
+	metas, err := filepath.Glob(pkg.POSTS_PATH + "**/metadata.json")
+	if err != nil {
+		return nil, err
+	}
+
+	posts := make(map[string]*domain.Post)
+	for _, md := range mds {
+		dir := "/posts/" + filepath.Base(filepath.Dir(md))
+		posts[dir] = &domain.Post{Dir: dir, Name: filepath.Base(filepath.Dir(md))}
+	}
+
+	var validPosts = []*domain.Post{}
+	for _, meta := range metas {
+		dir := "/posts/" + filepath.Base(filepath.Dir(meta))
+		post, ok := posts[dir]
+		if !ok {
+			log.Println("Dangling metadata.json: ", meta)
+			continue
+		}
+
+		metaBytes, err := os.ReadFile(meta)
+		if err != nil {
+			return nil, err
+		}
+
+		post.Metadata = &domain.Metadata{}
+		err = json.Unmarshal(metaBytes, post.Metadata)
+		if err != nil {
+			log.Println("Invalid metadata.json: ", meta, err)
+		}
+
+		err = setPostGitTrackingInfo(post)
+		if err != nil {
+			return nil, err
+		}
+		validPosts = append(validPosts, post)
+	}
+
+	sort.Slice(validPosts, func(i, j int) bool {
+		return validPosts[i].CreatedAt.Gt(validPosts[j].CreatedAt.Carbon)
+	})
+
+	return validPosts, nil
+}
+
 func (lps LocalPostService) Posts() ([]*domain.Post, error) {
 	mds, err := filepath.Glob(pkg.POSTS_PATH + "**/*.md")
 	if err != nil {

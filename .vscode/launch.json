@@ -13,6 +13,14 @@
             "cwd": "${workspaceFolder}"
         },
         {
+            "name": "Launch local indexer",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/cmd/indexer/main.go",
+            "cwd": "${workspaceFolder}"
+        },
+        {
             "name": "Launch current file",
             "type": "go",
             "request": "launch",

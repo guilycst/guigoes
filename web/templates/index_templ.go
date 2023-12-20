@@ -89,7 +89,7 @@ func Index(is state.IndexState) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			for _, tag := range post.Metadata.Tags {
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <span class=\"mr-[5px] rounded-full bg-zinc-300 px-[8px]\">")
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <span class=\"mr-[5px] rounded-full bg-zinc-950 px-[8px]\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}

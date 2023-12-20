@@ -22,8 +22,10 @@ func markdownToHTML(md []byte) []byte {
 			extension.Linkify,
 			extension.TaskList,
 			extension.DefinitionList,
+			extension.Footnote,
+			extension.Typographer,
 			highlighting.NewHighlighting(
-				highlighting.WithStyle("friendly"),
+				highlighting.WithStyle("xcode-dark"),
 				highlighting.WithFormatOptions(
 					chromahtml.WithLineNumbers(true),
 				),
