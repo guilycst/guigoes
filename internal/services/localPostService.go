@@ -70,12 +70,16 @@ func (lps LocalPostService) Posts(opts *ports.PostsOptions) ([]*domain.Post, err
 }
 
 func (lps LocalPostService) GetPost(postName string) (*domain.Post, error) {
+	return getPostFull(postName, pkg.Ptr(ports.HTML))
+}
+
+func getPostFull(postName string, opt *ports.PostsContentOpt) (*domain.Post, error) {
 	meta, err := getMeta(pkg.POSTS_PATH + postName + "/metadata.json")
 	if err != nil {
 		return nil, err
 	}
 
-	post, err := getPost(meta, pkg.Ptr(ports.HTML))
+	post, err := getPost(meta, opt)
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +121,7 @@ func (lps LocalPostService) SearchPosts(term string) ([]*domain.Post, error) {
 	hits := result.Hits[:10]
 	posts := []*domain.Post{}
 	for _, hit := range hits {
-		post, err := lps.GetPost(path.Base(hit.ID))
+		post, err := getPostFull(path.Base(hit.ID), pkg.Ptr(ports.None))
 		if err != nil {
 			return nil, err
 		}
