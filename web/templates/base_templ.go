@@ -43,7 +43,7 @@ func Base(bs state.BaseState) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</script><link rel=\"stylesheet\" href=\"/output.css\" defer><link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/apple-touch-icon.png\"><link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"/favicon-32x32.png\"><link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"/favicon-16x16.png\"><link rel=\"manifest\" href=\"/site.webmanifest\"><link rel=\"preconnect\" href=\"https://fonts.googleapis.com\" defer><link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin defer><link href=\"https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;1,300&amp;display=swap\" rel=\"stylesheet\" defer></head><body class=\"bg-zinc-900 text-zinc-300 text-xl\"><nav class=\"bg-zinc-100 dark:bg-zinc-950 mb-[10px]\"><div class=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8\"><div class=\"flex items-center justify-between h-16 m-auto max-w-prose\"><div class=\"flex items-center\"><div class=\"flex-shrink-0\"><a href=\"/\" class=\"text-white text-2xl font-bold\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</script><link rel=\"stylesheet\" href=\"/output.css\" defer><link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/apple-touch-icon.png\"><link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"/favicon-32x32.png\"><link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"/favicon-16x16.png\"><link rel=\"manifest\" href=\"/site.webmanifest\"><link rel=\"preconnect\" href=\"https://fonts.googleapis.com\" defer><link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin defer></head><body class=\"bg-zinc-900 text-zinc-300 text-xl\"><nav class=\"bg-zinc-100 dark:bg-zinc-950 mb-[10px]\"><div class=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8\"><div class=\"flex items-center justify-between h-16 m-auto max-w-prose\"><div class=\"flex items-center\"><div class=\"flex-shrink-0\"><a href=\"/\" class=\"text-white text-2xl font-bold\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -87,7 +87,7 @@ func Base(bs state.BaseState) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</main></div></body></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</main></div><link href=\"https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;1,300&amp;display=swap\" rel=\"stylesheet\" defer></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

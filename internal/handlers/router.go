@@ -33,6 +33,17 @@ func NewGinRouter(ps ports.PostService) *GinRouter {
 	return router
 }
 
+func staticCacheMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Apply the Cache-Control header to the static file
+		if strings.HasSuffix(c.Request.URL.Path, ".css") {
+			c.Header("Cache-Control", "private, max-age=86400")
+		}
+		// Continue to the next middleware or handler
+		c.Next()
+	}
+}
+
 func (gr GinRouter) registerRoutes() {
 	r := gr.Engine
 	r.GET("/", gr.Index)
@@ -40,6 +51,7 @@ func (gr GinRouter) registerRoutes() {
 	r.GET("/posts/assets/:asset", gr.PostAsset)
 	r.POST("/search", gr.SearchPosts)
 	//Static files that should be served at root
+	r.Use(staticCacheMiddleware())
 	r.StaticFile("/output.css", fmt.Sprintf("%s/output.css", pkg.DIST_PATH))
 	r.StaticFile("/site.webmanifest", fmt.Sprintf("%s/site.webmanifest", pkg.DIST_PATH))
 	r.StaticFile("/favicon.ico", fmt.Sprintf("%s/favicon.ico", pkg.DIST_PATH))
