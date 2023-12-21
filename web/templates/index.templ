@@ -9,7 +9,7 @@ templ Index(is state.IndexState) {
 		//blog post
 		<div>
 			//post date
-			<div class="text-sm font-thin">{ post.Metadata.Author } | { LocalizeTime(post.CreatedAt, is.Language) }</div>
+			<div class="text-sm font-thin">{ post.Metadata.Author } | { LocalizeTime(post.Metadata.CreatedAt, is.Language) }</div>
 			//post title
 			<div class="mb-[3px]">
 				<h2 class="font-black">

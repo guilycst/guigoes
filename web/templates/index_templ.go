@@ -44,7 +44,7 @@ func Index(is state.IndexState) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var4 string = LocalizeTime(post.CreatedAt, is.Language)
+			var templ_7745c5c3_Var4 string = LocalizeTime(post.Metadata.CreatedAt, is.Language)
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err

@@ -22,7 +22,10 @@ func init() {
 }
 
 func main() {
-	idx, err := postsService.Posts()
+	idx, err := postsService.Posts(&ports.PostsOptions{
+		FetchN:  pkg.Ptr(uint64(1000)),
+		Content: pkg.Ptr(ports.None),
+	})
 	if err != nil {
 		log.Fatal(err)
 	}

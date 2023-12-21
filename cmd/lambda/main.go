@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"path/filepath"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -9,12 +10,16 @@ import (
 	"github.com/guilycst/guigoes/internal/handlers"
 	"github.com/guilycst/guigoes/internal/services"
 	"github.com/guilycst/guigoes/pkg"
+	"github.com/otiai10/copy"
 )
 
 var ginLambda *ginadapter.GinLambda
 
 func init() {
 	pkg.LoadEnvFromOS()
+	idxTmp := "/tmp/" + filepath.Base(pkg.BLEVE_IDX_PATH) + "/"
+	copy.Copy(pkg.BLEVE_IDX_PATH, idxTmp)
+	pkg.BLEVE_IDX_PATH = idxTmp
 	lps := services.NewLocalPostService()
 	gr := handlers.NewGinRouter(lps)
 	ginLambda = ginadapter.New(gr.Engine)

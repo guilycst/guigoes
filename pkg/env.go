@@ -13,6 +13,7 @@ var (
 	REPO_OWNER      string
 	POSTS_REPO      string
 	DIST_PATH       string
+	BLEVE_IDX_PATH  string
 )
 
 func LoadEnvFile() {
@@ -27,4 +28,5 @@ func LoadEnvFromOS() {
 	REPO_OWNER = os.Getenv("REPO_OWNER")
 	POSTS_REPO = os.Getenv("POSTS_REPO")
 	DIST_PATH = os.Getenv("DIST_PATH")
+	BLEVE_IDX_PATH = os.Getenv("BLEVE_IDX_PATH")
 }

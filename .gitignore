@@ -24,3 +24,4 @@ go.work
 tmp
 web/dist/output.css
 posts.bleve
+posts

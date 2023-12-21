@@ -5,13 +5,10 @@ import (
 )
 
 type Post struct {
-	Dir       string
-	Name      string
-	Metadata  *Metadata
-	Content   []byte
-	Hash      string
-	CreatedAt carbon.DateTime
-	UpdatedAt carbon.DateTime
+	Dir      string
+	Name     string
+	Metadata *Metadata
+	Content  []byte
 }
 
 type Metadata struct {
@@ -19,4 +16,8 @@ type Metadata struct {
 	Author      string   `json:"author"`
 	Description string   `json:"description"`
 	Tags        []string `json:"tags"`
+	CreatedAt   carbon.DateTime
+	UpdatedAt   carbon.DateTime
+	Hash        string
+	PostName    string
 }

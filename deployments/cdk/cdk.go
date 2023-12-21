@@ -27,8 +27,9 @@ func GuigoesCdkStack(scope constructs.Construct, id string, props *CdkStackProps
 		Runtime: awslambda.Runtime_GO_1_X(),
 		Entry:   sptr("../../cmd/lambda/main.go"),
 		Environment: &map[string]*string{
-			*sptr("POSTS_PATH"): sptr("/opt/posts/"),
-			*sptr("DIST_PATH"):  sptr("/opt/web/dist"),
+			"POSTS_PATH":     sptr("/opt/posts/"),
+			"DIST_PATH":      sptr("/opt/web/dist"),
+			"BLEVE_IDX_PATH": sptr("/opt/blog.bleve"),
 		},
 	})
 

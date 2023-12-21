@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/gin-gonic/contrib/gzip"
 	"github.com/gin-gonic/gin"
 	"github.com/guilycst/guigoes/internal/core/domain"
 	"github.com/guilycst/guigoes/internal/ports"
@@ -22,11 +23,12 @@ type GinRouter struct {
 }
 
 func NewGinRouter(ps ports.PostService) *GinRouter {
+
 	router := &GinRouter{
 		Engine:  gin.Default(),
 		PostSrv: ps,
 	}
-	//router.Engine.Use(gzip.Gzip(gzip.DefaultCompression))
+	router.Engine.Use(gzip.Gzip(gzip.DefaultCompression))
 	router.registerRoutes()
 	return router
 }
@@ -56,6 +58,7 @@ func (gr GinRouter) SearchPosts(c *gin.Context) {
 		if ref != "" {
 			url, err := url.Parse(ref)
 			if err != nil {
+				log.Println(err)
 				c.AbortWithError(500, err)
 				return
 			}
@@ -67,8 +70,9 @@ func (gr GinRouter) SearchPosts(c *gin.Context) {
 			}
 		}
 
-		posts, err := gr.PostSrv.Posts()
+		posts, err := gr.PostSrv.Posts(nil)
 		if err != nil {
+			log.Println(err)
 			c.AbortWithError(500, err)
 			return
 		}
@@ -85,6 +89,7 @@ func (gr GinRouter) SearchPosts(c *gin.Context) {
 
 	posts, err := gr.PostSrv.SearchPosts(search)
 	if err != nil {
+		log.Println(err)
 		c.AbortWithError(500, err)
 		return
 	}
@@ -94,6 +99,7 @@ func (gr GinRouter) SearchPosts(c *gin.Context) {
 		Posts: posts,
 	}
 
+	c.Header("Content-Type", "text/html; charset=utf-8")
 	templates.Index(idxState).Render(c.Request.Context(), c.Writer)
 	c.Status(200)
 }
@@ -107,6 +113,7 @@ func (gr GinRouter) PostAsset(c *gin.Context) {
 
 	url, err := url.Parse(ref)
 	if err != nil {
+		log.Println(err)
 		c.AbortWithError(500, err)
 		return
 	}
@@ -116,6 +123,7 @@ func (gr GinRouter) PostAsset(c *gin.Context) {
 
 	assetPath, err := gr.PostSrv.GetPostAsset(postName, assetName)
 	if err != nil {
+		log.Println(err)
 		if errors.Is(err, &domain.AssetNotFoundError{}) {
 			c.AbortWithError(404, err)
 		}
@@ -137,11 +145,12 @@ func (gr GinRouter) Post(c *gin.Context) {
 func (gr GinRouter) GetPostByName(postName string, frag bool, c *gin.Context) {
 	post, err := gr.PostSrv.GetPost(postName)
 	if err != nil {
+		log.Println(err)
 		c.AbortWithError(500, err)
 		return
 	}
 
-	c.Header("Last-Modified", post.UpdatedAt.ToRfc7231String())
+	c.Header("Last-Modified", post.Metadata.UpdatedAt.ToRfc7231String())
 	postContent := templates.Unsafe(string(post.Content))
 	postFragment := templates.Post(post, postContent)
 	if frag {
@@ -152,6 +161,7 @@ func (gr GinRouter) GetPostByName(postName string, frag bool, c *gin.Context) {
 		return
 	}
 
+	c.Header("Content-Type", "text/html; charset=utf-8")
 	templates.Base(state.BaseState{
 		State: state.State{Language: getLanguage(c)},
 		Title: post.Metadata.Title,
@@ -180,8 +190,9 @@ func getLanguage(c *gin.Context) string {
 
 func (gr GinRouter) Index(c *gin.Context) {
 
-	posts, err := gr.PostSrv.Posts()
+	posts, err := gr.PostSrv.Posts(nil)
 	if err != nil {
+		log.Println(err)
 		c.AbortWithError(500, err)
 		return
 	}
@@ -195,6 +206,8 @@ func (gr GinRouter) Index(c *gin.Context) {
 		Title: "Guigoes - Home",
 		Body:  templates.Index(idxState),
 	}
+
+	c.Header("Content-Type", "text/html; charset=utf-8")
 	templates.Base(bs).Render(c.Request.Context(), c.Writer)
 	c.Status(200)
 }

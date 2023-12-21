@@ -40,11 +40,13 @@ require (
 	github.com/golang/protobuf v1.5.0 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/mschoch/smat v0.2.0 // indirect
+	github.com/otiai10/copy v1.14.0 // indirect
 	github.com/stretchr/testify v1.8.4 // indirect
 	github.com/yuin/goldmark v1.6.0 // indirect
 	github.com/yuin/goldmark-highlighting/v2 v2.0.0-20230729083705-37449abec8cc // indirect
 	go.abhg.dev/goldmark/anchor v0.1.1 // indirect
 	go.etcd.io/bbolt v1.3.7 // indirect
+	golang.org/x/sync v0.3.0 // indirect
 )
 
 require (
