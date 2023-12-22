@@ -49,6 +49,7 @@ func (gr GinRouter) registerRoutes() {
 	r.GET("/", gr.Index)
 	r.GET("/posts/:post", gr.Post)
 	r.GET("/posts/assets/:asset", gr.PostAsset)
+	r.GET("/about", gr.About)
 	r.POST("/search", gr.SearchPosts)
 	//Static files that should be served at root
 	r.Use(staticCacheMiddleware())
@@ -60,6 +61,24 @@ func (gr GinRouter) registerRoutes() {
 	r.StaticFile("/apple-touch-icon.png", fmt.Sprintf("%s/apple-touch-icon.png", pkg.DIST_PATH))
 	r.StaticFile("/android-chrome-512x512.png", fmt.Sprintf("%s/android-chrome-512x512.png", pkg.DIST_PATH))
 	r.StaticFile("/android-chrome-192x192.png", fmt.Sprintf("%s/android-chrome-192x192.png", pkg.DIST_PATH))
+}
+
+func (gr GinRouter) About(c *gin.Context) {
+	about := templates.About()
+	frag := c.Request.URL.Query().Get("fragment") == "1"
+	if !frag {
+		about = templates.Base(state.BaseState{
+			Title: "Guigoes - Guilherme de Castro",
+			State: state.State{Language: getLanguage(c)},
+			Body:  about,
+		})
+	}
+
+	c.Header("HX-Replace-Url", "/about")
+	c.Header("HX-Push-Url", "/about")
+	c.Header("Content-Type", "text/html; charset=utf-8")
+	about.Render(c.Request.Context(), c.Writer)
+	c.Status(200)
 }
 
 func (gr GinRouter) SearchPosts(c *gin.Context) {
