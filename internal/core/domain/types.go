@@ -12,12 +12,15 @@ type Post struct {
 }
 
 type Metadata struct {
-	Title       string   `json:"title"`
-	Author      string   `json:"author"`
-	Description string   `json:"description"`
-	Tags        []string `json:"tags"`
-	CreatedAt   carbon.DateTime
-	UpdatedAt   carbon.DateTime
-	Hash        string
-	PostName    string
+	Title           string   `json:"title"`
+	Author          string   `json:"author"`
+	Description     string   `json:"description"`
+	Tags            []string `json:"tags"`
+	Cover           string   `json:"cover"`
+	CoverAlt        string   `json:"cover_alt"`
+	MdCoverPosition string   `json:"md_cover_position"`
+	CreatedAt       carbon.DateTime
+	UpdatedAt       carbon.DateTime
+	Hash            string
+	PostName        string
 }

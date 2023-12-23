@@ -48,6 +48,7 @@ func (gr GinRouter) registerRoutes() {
 	r := gr.Engine
 	r.GET("/", gr.Index)
 	r.GET("/posts/:post", gr.Post)
+	r.GET("/posts/:post/assets/:asset", gr.PostAssetAbs)
 	r.GET("/posts/assets/:asset", gr.PostAsset)
 	r.GET("/about", gr.About)
 	r.POST("/search", gr.SearchPosts)
@@ -152,6 +153,24 @@ func (gr GinRouter) PostAsset(c *gin.Context) {
 	postName := filepath.Base(url.Path)
 	assetName := c.Param("asset")
 
+	assetPath, err := gr.PostSrv.GetPostAsset(postName, assetName)
+	if err != nil {
+		log.Println(err)
+		if errors.Is(err, &domain.AssetNotFoundError{}) {
+			c.AbortWithError(404, err)
+		}
+		c.AbortWithError(500, err)
+		return
+	}
+
+	log.Println("Serving asset: ", assetPath)
+	c.File(assetPath)
+	c.Status(200)
+}
+
+func (gr GinRouter) PostAssetAbs(c *gin.Context) {
+	postName := c.Param("post")
+	assetName := c.Param("asset")
 	assetPath, err := gr.PostSrv.GetPostAsset(postName, assetName)
 	if err != nil {
 		log.Println(err)

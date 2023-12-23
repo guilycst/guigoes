@@ -21,7 +21,7 @@ templ Base(bs state.BaseState) {
 			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin defer/>
 		</head>
 		<body class="bg-zinc-900 text-zinc-300 text-xl">
-			<nav class="px-2 flex flex-row items-center bg-zinc-950 mb-[10px]">
+			<nav class="px-2 flex flex-row items-center bg-zinc-950">
 				<a href="/" class="text-white text-2xl font-bold">GG</a>
 				<div class="flex items-center justify-center h-16 m-auto md:max-w-prose">
 					<div class="flex items-center">
@@ -49,11 +49,9 @@ templ Base(bs state.BaseState) {
 					</div>
 				</div>
 			</nav>
-			<div class="m-auto max-w-prose">
-				<main id="main" class="flex flex-col gap-4 place-content-center pt-[50px] mb-10 mx-10">
-					@bs.Body
-				</main>
-			</div>
+			<main id="main" class="flex flex-col gap-4 place-content-center mb-10">
+				@bs.Body
+			</main>
 			<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;1,300&display=swap" rel="stylesheet" defer/>
 		</body>
 	</html>

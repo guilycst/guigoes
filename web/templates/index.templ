@@ -3,35 +3,50 @@ package templates
 import "github.com/guilycst/guigoes/web/templates/state"
 
 templ Index(is state.IndexState) {
-	//using tailwindcss
 	//container
-	for i, post := range is.Posts {
-		//blog post
-		<div>
-			//post date
-			<div class="text-sm font-thin">{ post.Metadata.Author } | { LocalizeTime(post.Metadata.CreatedAt, is.Language) }</div>
-			//post title
-			<div class="mb-[3px]">
-				<h2 class="font-black">
-					<a href={ templ.URL(post.Dir) } hx-get={ post.Dir + "?fragment=1" } hx-target="#main">{ post.Metadata.Title }</a>
-				</h2>
+	<div class="m-auto max-w-prose pt-[50px] px-10">
+		for i, post := range is.Posts {
+			//blog post
+			<div clas="flex flex-col">
+				<div class="flex flex-col md:flex-row-reverse md:items-center">
+					<a href={ templ.URL(post.Dir) } hx-get={ post.Dir + "?fragment=1" } class="mb-2 max-h-[160px] md:max-h-[210px] md:mb-0 md:ml-[10px]" hx-target="#main">
+						<img class="max-h-[160px] md:max-h-[210px] w-full object-cover md:object-contain" src={ post.Dir + post.Metadata.Cover } alt={ post.Metadata.CoverAlt }/>
+					</a>
+					<div>
+						//post date
+						<div class="text-sm font-thin">{ post.Metadata.Author } | { LocalizeTime(post.Metadata.CreatedAt, is.Language) }</div>
+						//post title
+						<div class="mb-[3px">
+							<h2 class="font-black cursor-pointer">
+								<a href={ templ.URL(post.Dir) } hx-get={ post.Dir + "?fragment=1" } hx-target="#main">{ post.Metadata.Title }</a>
+							</h2>
+						</div>
+						//post description
+						<div class="text-base">
+							<p class="cursor-pointer">
+								{ post.Metadata.Description }
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="text-sm font-thin">
+					for _, tag := range post.Metadata.Tags {
+						//post tags
+						<span class="mr-[5px] rounded-full bg-zinc-950 px-[8px]">{ tag }</span>
+					}
+				</div>
 			</div>
-			//post description
-			<div class="text-base">
-				<p>
-					{ post.Metadata.Description }
-				</p>
-			</div>
-			<div class="text-sm font-thin">
-				for _, tag := range post.Metadata.Tags {
-					//post tags
-					<span class="mr-[5px] rounded-full bg-zinc-950 px-[8px]">{ tag }</span>
-				}
-			</div>
-		</div>
-		if i != len(is.Posts)-1 {
-			//post separator
-			<hr class="my-[10px] border-zinc-300"/>
+			if i != len(is.Posts)-1 {
+				//post separator
+				<hr class="my-[10px] border-zinc-300"/>
+			}
 		}
-	}
+		if len(is.Posts) == 0 {
+			//no posts
+			<div class="text-center">
+				<h1 class="font-black text-xl">¯\_(ツ)_/¯</h1>
+				<h2 class="font-normal text-xl">Nothing to see here</h2>
+			</div>
+		}
+	</div>
 }

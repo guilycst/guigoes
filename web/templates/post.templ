@@ -3,7 +3,9 @@ package templates
 import "github.com/guilycst/guigoes/internal/core/domain"
 
 templ Post(post *domain.Post, content templ.Component) {
-	<div class="post">
+	<title>{ post.Metadata.Title }</title>
+	<img id="cover-image" src={ post.Dir + post.Metadata.Cover } alt={ post.Metadata.CoverAlt } class="w-full max-h-[62vh] object-cover transition ease-in-out delay-150"/>
+	<div class="post m-auto max-w-prose mt-4 px-10">
 		@content
 	</div>
 }
