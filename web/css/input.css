@@ -4,6 +4,14 @@
 
 .post {}
 
+.post a {
+    @apply text-blue-700;
+}
+
+.post p code {
+    @apply text-zinc-900;
+}
+
 .post h1 {
     @apply text-4xl pb-3 mb-4 pl-6 -ml-6 font-black;
 }
@@ -56,26 +64,6 @@
     @apply visible;
 }
 
-/* .post h2 a { 
-    @apply text-zinc-500 text-base font-medium float-left -ml-6 leading-loose invisible; 
-}
-
-.post h3 a { 
-    @apply text-zinc-500 text-base font-medium float-left -ml-6 leading-loose invisible; 
-}
-
-.post h4 a { 
-    @apply text-zinc-500 text-base font-medium float-left -ml-6 leading-loose invisible; 
-}
-
-.post h5 a { 
-    @apply text-zinc-500 text-base font-medium float-left -ml-6 leading-loose invisible; 
-}
-
-.post h6 a { 
-    @apply text-zinc-500 text-base font-medium float-left leading-loose; 
-    padding-left: -24px;
-} */
 
 .post a:hover {
     @apply underline;

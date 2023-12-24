@@ -121,6 +121,9 @@ func (lps LocalPostService) SearchPosts(term string) ([]*domain.Post, error) {
 	hits := result.Hits[:10]
 	posts := []*domain.Post{}
 	for _, hit := range hits {
+		if hit == nil {
+			continue
+		}
 		post, err := getPostWithContent(path.Base(hit.ID), pkg.Ptr(ports.None))
 		if err != nil {
 			log.Printf("Post %s not found, reindex migh be necessary\n", hit.ID)

@@ -61,7 +61,7 @@ func Base(bs state.BaseState) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</a> <a hx-get=\"/about?fragment=1\" hx-target=\"#main\" class=\"hidden md:block text-zinc-300 hover:bg-zinc-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</a> <a href=\"/about\" hx-get=\"/about?fragment=1\" hx-target=\"#main\" class=\"hidden md:block text-zinc-300 hover:bg-zinc-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -79,7 +79,7 @@ func Base(bs state.BaseState) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</a> <a hx-get=\"/about?fragment=1\" class=\"mt-2 text-zinc-300 hover:bg-zinc-700 hover:text-white rounded-md text-sm pb-2 font-medium\" hx-target=\"#main\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</a> <a href=\"/about\" hx-get=\"/about?fragment=1\" class=\"mt-2 text-zinc-300 hover:bg-zinc-700 hover:text-white rounded-md text-sm pb-2 font-medium\" hx-target=\"#main\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

@@ -30,7 +30,7 @@ func Index(is state.IndexState) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		for i, post := range is.Posts {
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <div clas=\"flex flex-col\"><div class=\"flex flex-col md:flex-row-reverse md:items-center\"><a href=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <div class=\"flex flex-col\"><div class=\"flex flex-col md:flex-row-reverse md:items-center\"><a href=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

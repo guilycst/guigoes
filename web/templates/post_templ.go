@@ -50,7 +50,7 @@ func Post(post *domain.Post, content templ.Component) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"w-full max-h-[62vh] object-cover transition ease-in-out delay-150\"><div class=\"post m-auto max-w-prose mt-4 px-10\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"w-full max-h-[62vh] object-cover transition ease-in-out delay-150\"><div class=\"post m-auto max-w-[100vw] md:max-w-prose mt-4 px-10\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

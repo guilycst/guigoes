@@ -35,7 +35,7 @@ templ Base(bs state.BaseState) {
 									</div>
 								</form>
 								<a href="/" class="hidden md:block text-zinc-300 hover:bg-zinc-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
-								<a hx-get="/about?fragment=1" hx-target="#main" class="hidden md:block text-zinc-300 hover:bg-zinc-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">About</a>
+								<a href="/about" hx-get="/about?fragment=1" hx-target="#main" class="hidden md:block text-zinc-300 hover:bg-zinc-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">About</a>
 							</div>
 						</div>
 					</div>
@@ -45,7 +45,7 @@ templ Base(bs state.BaseState) {
 					<div class="hidden group-hover:flex flex-col items-center absolute w-[100px] mw-[100px] top-[39px] -left-11 text-ellipsis bg-zinc-700 rounded-b-md rounded-tl-md">
 						<div class="hidden group-hover:block bg-zinc-700 h-7"></div>
 						<a href="/" class="mw-full text-zinc-300 hover:bg-zinc-700 hover:text-white rounded-md text-sm pb-2 font-medium">Home</a>
-						<a hx-get="/about?fragment=1" class="mt-2 text-zinc-300 hover:bg-zinc-700 hover:text-white rounded-md text-sm pb-2 font-medium" hx-target="#main">About</a>
+						<a href="/about" hx-get="/about?fragment=1" class="mt-2 text-zinc-300 hover:bg-zinc-700 hover:text-white rounded-md text-sm pb-2 font-medium" hx-target="#main">About</a>
 					</div>
 				</div>
 			</nav>

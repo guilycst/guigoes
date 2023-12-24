@@ -7,7 +7,7 @@ templ Index(is state.IndexState) {
 	<div class="m-auto max-w-prose pt-[50px] px-10">
 		for i, post := range is.Posts {
 			//blog post
-			<div clas="flex flex-col">
+			<div class="flex flex-col">
 				<div class="flex flex-col md:flex-row-reverse md:items-center">
 					<a href={ templ.URL(post.Dir) } hx-get={ post.Dir + "?fragment=1" } class="mb-2 max-h-[160px] md:max-h-[210px] md:mb-0 md:ml-[10px]" hx-target="#main">
 						<img class="max-h-[160px] md:max-h-[210px] w-full object-cover md:object-contain" src={ post.Dir + post.Metadata.Cover } alt={ post.Metadata.CoverAlt }/>
