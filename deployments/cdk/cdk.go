@@ -30,6 +30,7 @@ func GuigoesCdkStack(scope constructs.Construct, id string, props *CdkStackProps
 			"POSTS_PATH":     sptr("/opt/posts/"),
 			"DIST_PATH":      sptr("/opt/web/dist"),
 			"BLEVE_IDX_PATH": sptr("/opt/blog.bleve"),
+			"GIN_MODE":       sptr("release"),
 		},
 	})
 

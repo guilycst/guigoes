@@ -58,7 +58,7 @@ Além disso Lambdas tem duas classes de armazenamento por padrão:
 
 **Temporário:** Diretório ```/tmp```  que permite escritas. Essa classe de armazenamento começa em 512 MB e pode ser configurada para até 10 GB. Como o nome sugere, esse armazenamento existe somente durante a execução da lamba, tudo que existe nele é descartado quando a lambda termina.
 
-Para esse site estarei usando a menor lambda disponibilizada pela AWS
+Para esse site usarei a menor lambda disponibilizada pela AWS
 
 |RAM   |Ephemeral storage|
 |------|-----------------|
@@ -262,11 +262,11 @@ Fora da possibilidade de eu realizar deploy de uma versão quebrada da aplicaç�
 
 Golang + HTMX me parece ser ótimo para criar uma webapp leve sem abrir mão da interatividade que é esperada de sites modernos, como o conteúdo é na sua maior parte HTML puro, o suporte nos mais diversos navegadores vem de graça, além da performance.
 
-Falando em performance, ela é dependente somente de quão rápido seu servidor consegue renderizar HTML somado com a latência da rede, nesse exemplo as condições são ideais para boa performance, o conteúdo é lido diretamente do sistema de arquivos e sofre poucas alterações. Em aplicações integradas com banco de dados e/ou APIs, o tempo final para entrega do documento HTML renderizado pelo servidor aumentar significativamente, mas até ai, isso também é verdade para uma API que serve JSON ou XML.
+Falando em performance, ela é dependente somente de quão rápido seu servidor consegue renderizar HTML somado com a latência da rede, nesse exemplo as condições são ideais para boa performance, o conteúdo é lido diretamente do sistema de arquivos e sofre poucas alterações. Em aplicações integradas com banco de dados e/ou APIs, o tempo final para entrega do documento HTML renderizado pelo servidor deve aumentar significativamente, mas até ai, isso também é verdade para uma API que serve JSON ou XML.
 
 O servidor precisa estar sempre alcançável para renderizar as páginas, então se você precisa servir algum tipo de funcionalidade offline HTMX não vai te ajudar 😢.
 
-Caso você já tenha um API pronta com os recursos em algum formato de transporte popular com JSON, um framework que renderiza do lado do client parece ser uma melhor pedida ao invés de HTMX, vejo duas saídas nesse caso caso quisesse MESMO usar HTMX nesse cenário:
+Caso você já tenha um API pronta com os recursos em algum formato de transporte popular com JSON, um framework que renderiza do lado do client parece ser uma melhor pedida ao invés de HTMX, vejo duas saídas caso quisesse MESMO usar HTMX nesse cenário:
 
 1. Criar rotas específicas para lidar somente com as request HTMX na sua aplicação pré existente, acho que seria um pesadelo tentar misturar num mesmo recurso da API a geração de um formato de transporte como JSON como um formato de "apresentação" como HTML, são dois mundos bem distintos que não deveriam se misturar.
 
