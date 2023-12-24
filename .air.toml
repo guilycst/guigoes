@@ -7,7 +7,7 @@ args_bin = []
 bin = "./tmp/guigoes"
 cmd = "make build"
 delay = 1000
-exclude_dir = ["assets", "tmp", "vendor", "testdata"]
+exclude_dir = ["assets", "tmp", "vendor", "testdata", "deployments", "docs"]
 exclude_file = []
 exclude_regex = ["_test.go", ".*_templ.go"]
 exclude_unchanged = false
@@ -15,7 +15,6 @@ follow_symlink = false
 full_bin = ""
 include_dir = []
 include_ext = [
-  "deployments",
   "go",
   "tpl",
   "tmpl",

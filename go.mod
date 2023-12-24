@@ -3,18 +3,19 @@ module github.com/guilycst/guigoes
 go 1.21.4
 
 require (
+	github.com/alecthomas/chroma/v2 v2.2.0
 	github.com/aws/aws-lambda-go v1.42.0
 	github.com/awslabs/aws-lambda-go-api-proxy v0.16.0
 	github.com/gin-gonic/gin v1.9.1
+	github.com/golang-module/carbon/v2 v2.2.14
+	github.com/otiai10/copy v1.14.0
+	github.com/yuin/goldmark v1.6.0
+	github.com/yuin/goldmark-highlighting/v2 v2.0.0-20230729083705-37449abec8cc
+	go.abhg.dev/goldmark/anchor v0.1.1
 )
 
 require (
-	github.com/Masterminds/semver/v3 v3.2.1 // indirect
 	github.com/RoaringBitmap/roaring v1.2.3 // indirect
-	github.com/alecthomas/chroma/v2 v2.2.0 // indirect
-	github.com/aws/constructs-go/constructs/v10 v10.3.0 // indirect
-	github.com/aws/constructs-go/constructs/v3 v3.4.232 // indirect
-	github.com/aws/jsii-runtime-go v1.93.0 // indirect
 	github.com/bits-and-blooms/bitset v1.2.0 // indirect
 	github.com/blevesearch/bleve_index_api v1.0.6 // indirect
 	github.com/blevesearch/geo v0.1.18 // indirect
@@ -31,29 +32,17 @@ require (
 	github.com/blevesearch/zapx/v13 v13.3.10 // indirect
 	github.com/blevesearch/zapx/v14 v14.3.10 // indirect
 	github.com/blevesearch/zapx/v15 v15.3.13 // indirect
-	github.com/cdklabs/awscdk-asset-awscli-go/awscliv1/v2 v2.2.201 // indirect
-	github.com/cdklabs/awscdk-asset-kubectl-go/kubectlv20/v2 v2.1.2 // indirect
-	github.com/cdklabs/awscdk-asset-node-proxy-agent-go/nodeproxyagentv6/v2 v2.0.1 // indirect
 	github.com/dlclark/regexp2 v1.7.0 // indirect
-	github.com/golang-module/carbon/v2 v2.2.14 // indirect
 	github.com/golang/geo v0.0.0-20210211234256-740aa86cb551 // indirect
 	github.com/golang/protobuf v1.5.0 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/mschoch/smat v0.2.0 // indirect
-	github.com/otiai10/copy v1.14.0 // indirect
-	github.com/stretchr/testify v1.8.4 // indirect
-	github.com/yuin/goldmark v1.6.0 // indirect
-	github.com/yuin/goldmark-highlighting/v2 v2.0.0-20230729083705-37449abec8cc // indirect
-	go.abhg.dev/goldmark/anchor v0.1.1 // indirect
 	go.etcd.io/bbolt v1.3.7 // indirect
 	golang.org/x/sync v0.3.0 // indirect
 )
 
 require (
 	github.com/a-h/templ v0.2.476
-	github.com/aws/aws-cdk-go/awscdk v1.204.0-devpreview
-	github.com/aws/aws-cdk-go/awscdk/v2 v2.115.0
-	github.com/aws/aws-cdk-go/awscdklambdagoalpha/v2 v2.115.0-alpha.0
 	github.com/blevesearch/bleve/v2 v2.3.10
 	github.com/bytedance/sonic v1.9.1 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
@@ -64,7 +53,6 @@ require (
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-playground/validator/v10 v10.14.0 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
-	github.com/gomarkdown/markdown v0.0.0-20231115200524-a660076da3fd
 	github.com/joho/godotenv v1.5.1
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.4 // indirect

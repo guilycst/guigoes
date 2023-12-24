@@ -1,6 +1,8 @@
 install:
 	chmod +x install.sh
 	sudo ./install.sh
+	go mod tidy
+	go mod download
 tailwindcss:
 	tailwindcss -i web/css/input.css -o web/dist/output.css -m
 build:
