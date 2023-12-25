@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"errors"
 	"fmt"
 	"log"
 	"net/mail"
@@ -185,8 +184,9 @@ func (gr GinRouter) PostAsset(c *gin.Context) {
 	assetPath, err := gr.PostSrv.GetPostAsset(postName, assetName)
 	if err != nil {
 		log.Println(err)
-		if errors.Is(err, &domain.AssetNotFoundError{}) {
+		if _, ok := err.(*domain.FSResourceNotFoundError); ok {
 			c.AbortWithError(404, err)
+			return
 		}
 		c.AbortWithError(500, err)
 		return
@@ -203,8 +203,9 @@ func (gr GinRouter) PostAssetAbs(c *gin.Context) {
 	assetPath, err := gr.PostSrv.GetPostAsset(postName, assetName)
 	if err != nil {
 		log.Println(err)
-		if errors.Is(err, &domain.AssetNotFoundError{}) {
+		if _, ok := err.(*domain.FSResourceNotFoundError); ok {
 			c.AbortWithError(404, err)
+			return
 		}
 		c.AbortWithError(500, err)
 		return
@@ -225,6 +226,11 @@ func (gr GinRouter) GetPostByName(postName string, frag bool, c *gin.Context) {
 	post, err := gr.PostSrv.GetPost(postName)
 	if err != nil {
 		log.Println(err)
+
+		if _, ok := err.(*domain.FSResourceNotFoundError); ok {
+			gr.NoRoute(c)
+			return
+		}
 		c.AbortWithError(500, err)
 		return
 	}
