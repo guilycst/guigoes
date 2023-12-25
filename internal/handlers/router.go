@@ -47,6 +47,7 @@ func staticCacheMiddleware() gin.HandlerFunc {
 func (gr GinRouter) registerRoutes() {
 	r := gr.Engine
 	r.GET("/", gr.Index)
+	r.NoRoute(gr.NoRoute)
 	r.GET("/posts/:post", gr.Post)
 	r.GET("/posts/:post/assets/:asset", gr.PostAssetAbs)
 	r.GET("/posts/assets/:asset", gr.PostAsset)
@@ -251,6 +252,23 @@ func (gr GinRouter) Index(c *gin.Context) {
 	idxState := state.IndexState{
 		State: state.State{Language: getLanguage(c)},
 		Posts: posts,
+	}
+
+	bs := state.BaseState{
+		Title: "Guigoes - Home",
+		Body:  templates.Index(idxState),
+	}
+
+	c.Header("Content-Type", "text/html; charset=utf-8")
+	templates.Base(bs).Render(c.Request.Context(), c.Writer)
+	c.Status(200)
+}
+
+func (gr GinRouter) NoRoute(c *gin.Context) {
+
+	idxState := state.IndexState{
+		State: state.State{Language: getLanguage(c)},
+		Posts: []*domain.Post{},
 	}
 
 	bs := state.BaseState{
