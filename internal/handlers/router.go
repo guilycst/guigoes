@@ -62,6 +62,7 @@ func (gr GinRouter) registerRoutes() {
 	r.StaticFile("/apple-touch-icon.png", fmt.Sprintf("%s/apple-touch-icon.png", pkg.DIST_PATH))
 	r.StaticFile("/android-chrome-512x512.png", fmt.Sprintf("%s/android-chrome-512x512.png", pkg.DIST_PATH))
 	r.StaticFile("/android-chrome-192x192.png", fmt.Sprintf("%s/android-chrome-192x192.png", pkg.DIST_PATH))
+	r.StaticFile("/robots.txt", fmt.Sprintf("%s/robots.txt", pkg.DIST_PATH))
 }
 
 func (gr GinRouter) About(c *gin.Context) {
