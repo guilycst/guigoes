@@ -47,7 +47,7 @@ func Index(is state.IndexState) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"mb-2 max-h-[160px] md:max-h-[210px] md:mb-0 md:ml-[10px]\" hx-target=\"#main\"><img class=\"max-h-[160px] md:max-h-[210px] w-full object-cover md:object-contain\" src=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-target=\"#main\"><div class=\"max-h-[160px] h-[160px] mb-[10px] md:w-[250px] md:h-[250px] md:max-h-[250px] md:mb-0 md:ml-[10px]\"><img class=\"w-full h-full object-cover md:object-scale-down\" src=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -63,7 +63,7 @@ func Index(is state.IndexState) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"></a><div><div class=\"text-sm font-thin\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"></div></a><div><div class=\"text-sm font-thin\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -121,12 +121,12 @@ func Index(is state.IndexState) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p></div></div></div><div class=\"text-sm font-thin\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p></div></div></div><div class=\"text-sm font-thin text-pretty mb-[10px] mt-[10px]\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			for _, tag := range post.Metadata.Tags {
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <span class=\"mr-[5px] rounded-full bg-zinc-950 px-[8px]\">")
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <span class=\"mr-[5px] rounded-full bg-zinc-950 px-[8px] text-pretty\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -145,7 +145,7 @@ func Index(is state.IndexState) templ.Component {
 				return templ_7745c5c3_Err
 			}
 			if i != len(is.Posts)-1 {
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <hr class=\"my-[10px] border-zinc-300\">")
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" <hr class=\"mt-[10px] mb-[20px] border-zinc-300\">")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}

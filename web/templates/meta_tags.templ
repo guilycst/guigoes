@@ -17,5 +17,6 @@ templ Meta(post *domain.Post) {
 	<meta name="twitter:card" content="summary_large_image" hx-swap-oob="beforebegin:head"/>
 	<meta name="twitter:image:alt" content={ post.Metadata.CoverAlt } hx-swap-oob="beforebegin:head"/>
 	<meta name="twitter:url" content={ "https://guigoes.com" + post.Dir + post.Metadata.Cover } hx-swap-oob="beforebegin:head"/>
-	<meta name="twitter:site" content="@website-username" hx-swap-oob="beforebegin:head"/>
+	<meta name="twitter:site" content="@guilycst" hx-swap-oob="beforebegin:head"/>
+	<meta name="twitter:creator" content="@guilycst" hx-swap-oob="beforebegin:head"/>
 }

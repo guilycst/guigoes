@@ -1,6 +1,6 @@
 {
     "title": "Criando um blog serverless eficiente e econômico com GO, HTMX e TailwindCSS",
-    "description": "Vamos explorar a experiência de criar um blog do zero usando Golang, HTMX e TailwindCSS, rodando em AWS Lambdas com boa performace e sem quebrar o banco 💸",
+    "description": "Vamos explorar a experiência de criar um blog do zero usando Golang, HTMX e TailwindCSS, rodando em AWS Lambdas com boa performance e sem quebrar o banco 💸",
     "author": "Guilherme de Castro",
     "tags": ["go", "htmx", "tailwind", "serverless", "aws"],
     "cover": "/assets/poor_man_coding.webp",
