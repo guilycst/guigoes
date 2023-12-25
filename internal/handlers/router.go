@@ -245,6 +245,7 @@ func (gr GinRouter) GetPostByName(postName string, frag bool, c *gin.Context) {
 		State: state.State{Language: getLanguage(c)},
 		Title: post.Metadata.Title,
 		Body:  postFragment,
+		Post:  post,
 	}).Render(c.Request.Context(), c.Writer)
 	c.Status(200)
 }

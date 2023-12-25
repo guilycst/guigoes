@@ -12,6 +12,7 @@ type State struct {
 type BaseState struct {
 	State
 	Title string
+	Post  *domain.Post
 	Body  templ.Component
 }
 
