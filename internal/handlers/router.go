@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"net/mail"
 	"net/url"
 	"path/filepath"
 	"strings"
@@ -53,6 +54,8 @@ func (gr GinRouter) registerRoutes() {
 	r.GET("/posts/assets/:asset", gr.PostAsset)
 	r.GET("/about", gr.About)
 	r.POST("/search", gr.SearchPosts)
+	r.GET("/subscribe", gr.Subscribe)
+	r.POST("/subscribe", gr.SubscribeAdd)
 	//Static files that should be served at root
 	r.Use(staticCacheMiddleware())
 	r.StaticFile("/output.css", fmt.Sprintf("%s/output.css", pkg.DIST_PATH))
@@ -135,6 +138,30 @@ func (gr GinRouter) SearchPosts(c *gin.Context) {
 
 	c.Header("Content-Type", "text/html; charset=utf-8")
 	templates.Index(idxState).Render(c.Request.Context(), c.Writer)
+	c.Status(200)
+}
+
+func (gr GinRouter) Subscribe(c *gin.Context) {
+	subComponent := templates.Subscribe("")
+	modal := c.Query("modal")
+	if modal == "1" {
+		templates.Modal(subComponent).Render(c.Request.Context(), c.Writer)
+		c.Status(200)
+		return
+	}
+
+	subComponent.Render(c.Request.Context(), c.Writer)
+	c.Status(200)
+}
+func (gr GinRouter) SubscribeAdd(c *gin.Context) {
+	email := c.Request.FormValue("email")
+	addr, err := mail.ParseAddress(email)
+	if err != nil {
+		log.Printf("Bad email address %s\n", err)
+		c.AbortWithError(400, err)
+	}
+	log.Println("SUBSCRIBED:", email, addr)
+	templates.SubscribeOk("").Render(c.Request.Context(), c.Writer)
 	c.Status(200)
 }
 

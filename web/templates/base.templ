@@ -36,6 +36,7 @@ templ Base(bs state.BaseState) {
 								</form>
 								<a href="/" class="hidden md:block text-zinc-300 hover:bg-zinc-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
 								<a href="/about" hx-get="/about?fragment=1" hx-target="#main" class="hidden md:block text-zinc-300 hover:bg-zinc-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">About</a>
+								<a href="/subscribe" hx-get="/subscribe?modal=1" hx-target="body" hx-swap="beforeend" class="hidden md:block text-zinc-300 hover:bg-zinc-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Subscribe</a>
 							</div>
 						</div>
 					</div>
@@ -46,6 +47,7 @@ templ Base(bs state.BaseState) {
 						<div class="hidden group-hover:block bg-zinc-700 h-7"></div>
 						<a href="/" class="mw-full text-zinc-300 hover:bg-zinc-700 hover:text-white rounded-md text-sm pb-2 font-medium">Home</a>
 						<a href="/about" hx-get="/about?fragment=1" class="mt-2 text-zinc-300 hover:bg-zinc-700 hover:text-white rounded-md text-sm pb-2 font-medium" hx-target="#main">About</a>
+						<a href="/subscribe" hx-get="/subscribe?modal=1" hx-target="body" hx-swap="beforeend" hx-target="#main" class="mt-2 text-zinc-300 hover:bg-zinc-700 hover:text-white rounded-md text-sm pb-2 font-medium">Subscribe</a>
 					</div>
 				</div>
 			</nav>
@@ -53,6 +55,7 @@ templ Base(bs state.BaseState) {
 				@bs.Body
 			</main>
 			<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;1,300&display=swap" rel="stylesheet" defer/>
+			<script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
 		</body>
 	</html>
 }

@@ -1,0 +1,10 @@
+package templates
+
+templ Modal(content templ.Component) {
+	<div id="modal" class="modal" _="on closeModal add .closing then wait for animationend then remove me">
+		<div class="modal-underlay" _="on click trigger closeModal"></div>
+		<div id="modal-content" class="modal-content">
+			@content
+		</div>
+	</div>
+}

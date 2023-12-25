@@ -23,3 +23,4 @@ go.work
 tmp
 web/dist/output.css
 posts.bleve
+.prod.env
