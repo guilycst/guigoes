@@ -71,6 +71,7 @@
 
 .post a {
     @apply text-blue-700;
+    word-break: break-all
 }
 
 .post p code {
