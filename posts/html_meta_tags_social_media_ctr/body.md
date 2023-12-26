@@ -1,6 +1,32 @@
-# A Importância das Meta Tags no Desenvolvimento Web: Impulsionando SEO, Redes Sociais e Taxa de Cliques
+# A Importância das Meta Tags: Impulsionando SEO, Redes Sociais e Taxa de Cliques
 
-As meta tags desempenham um papel vital no desenvolvimento web, influenciando diretamente a visibilidade nos motores de busca e a apresentação do conteúdo nas redes sociais. Ao adicionar meta tags, os desenvolvedores podem não apenas melhorar o SEO, mas também aumentar significativamente a Taxa de Cliques (CTR) por meio de uma representação mais atrativa e informativa nas plataformas online.
+Se você planeja criar conteúdo compartilhável para a internet, as meta tags desempenham um papel vital, influenciando diretamente a visibilidade nos motores de busca e a apresentação do conteúdo nas redes sociais. Ao adicionar meta tags, os desenvolvedores podem não apenas melhorar o SEO, mas também aumentar significativamente a Taxa de Cliques (CTR - Click Through Rate) por meio de uma representação mais atrativa e informativa nas plataformas online.
+
+## Tá, mas que diabos são meta tags?
+
+Todo documento HTML tem uma tag especial ```<head>``` que todo web dev já viu pelo menos uma vez. O uso mais comum dessa tag é para definir o título da página, algumas configurações de exibição e os recursos como scripts e estilos que serão usado na página.
+
+```html
+<head>
+    <title>A Importância das Meta Tags: Impulsionando SEO, Redes Sociais e Taxa de Cliques<title>
+    <script src="https://unpkg.com/htmx.org@1.9.9" integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/output.css" defer/>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+</head>
+```
+O efeito dessas tags vai de navegador para navegador, de dispositivo para dispositivo, mas no chrome no desktop deve renderizar algo assim:
+
+![Renderização da tag head no chrome](./assets/head.png)
+
+A tag ```head``` pode receber tags do tipo ```<meta>```, que são dados sobre a página que seu navegador está tentando renderizar, por exemplo, o encoding do texto. Vamos nos ater ao quesito de como elas influenciam a visualização de um artigo compartilhado em plataformas.
+
+Existe um classe de meta tags que podem ser usadas para influenciar ativamente como um link compartilhado vai ser exibido nas redes sociais, essas tags basicamente ajudam o web scrapper da plataforma coletar informações da página e gerar um preview:
+
+![Preview google sp](./assets/serp_google_prev.png)
+
+![Alt text](./assets/twitter_prev.png)
 
 ## Por que as Meta Tags são melhoram a Taxa de Cliques?
 
@@ -10,7 +36,7 @@ As meta tags desempenham um papel vital no desenvolvimento web, influenciando di
 
 3. **Destaque nos Resultados de Busca:** Meta tags bem otimizadas também afetam diretamente a exibição nos resultados de pesquisa. Um título cativante e uma descrição informativa podem destacar uma página em meio a muitos outros resultados, aumentando as chances de clique.
 
-## Open Graph
+## Open Graph (OG)
 
 O Open Graph é um protocolo desenvolvido pelo Facebook para permitir que páginas da web tenham um controle mais preciso sobre a forma como seu conteúdo é exibido quando compartilhado na plataforma. Essencialmente, o Open Graph fornece um conjunto de meta tags que os desenvolvedores podem incorporar no código HTML de suas páginas para especificar títulos, descrições, imagens e outros elementos relevantes ao compartilhar links no Facebook.
 
@@ -25,10 +51,8 @@ Exemplo das meta tags básicas Open Graph mais importantes:
     <meta property="og:description" content="Descrição breve do conteúdo da página">
     <meta property="og:image" content="URL da imagem">
     <meta property="og:url" content="URL da Página">
+    <meta property="og:type" content="Tipo do conteúdo">
 ````
-
-O compartilhamento fica bonito assim somente quando há meta tags associadas:
-![Post renderizado no Facebook quando há meta tags adequadas](https://scontent.fbnu1-1.fna.fbcdn.net/v/t39.2178-6/10956906_396737803821010_168799778_n.png?_nc_cat=107&ccb=1-7&_nc_sid=34156e&_nc_ohc=M4QDoadP8UMAX8HN_wX&_nc_ht=scontent.fbnu1-1.fna&oh=00_AfCqQjE4HidRCa-LIZnQmtLU7o4yI2DhiIq0thC6U41dcw&oe=658F1840)
 
 O Open Graph oferece meta tags específicas para diferentes tipos de mídia, como vídeo e imagens. Essas tags permitem que os desenvolvedores forneçam informações detalhadas sobre o conteúdo multimídia associado à página. Abaixo estão algumas das principais meta tags do Open Graph para tipos específicos de mídia:
 
@@ -45,14 +69,16 @@ O Open Graph oferece meta tags específicas para diferentes tipos de mídia, com
 <meta property="og:image:height" content="Altura da imagem">
 ````
 
-## Meta Tags Proprietárias do Twitter (X)
+## Twitter (X)
 
 Se seu conteúdo pode ser associado com alguma conta do Twitter, é boa prática incluir as tags proprietárias da plataforma:
 
 ```html
-    <meta name="twitter:site" content="@nome_do_site">
-    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@conta">
+    <meta name="twitter:creator" content="@conta">
 ```
+
+O Twitter adota algumas das tags Open Graph que vão ajudar a gerar cards de artigos simples, mas para conteúdos multimídia a maior parte são proprietárias, nesse [link](https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/markup) é possível quais tags OG são reaproveitadas e as opções disponíveis.
 
 ## Google
 

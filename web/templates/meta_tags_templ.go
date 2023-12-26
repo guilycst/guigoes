@@ -66,7 +66,7 @@ func Meta(post *domain.Post) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-swap-oob=\"beforebegin:head\"><meta property=\"og:site_name\" content=\"Guigoes\" hx-swap-oob=\"beforebegin,head\"><meta property=\"fb:app_id\" content=\"your_app_id\" hx-swap-oob=\"beforebegin,head\"><!--")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-swap-oob=\"beforebegin:head\"><meta property=\"og:site_name\" content=\"Guigoes\" hx-swap-oob=\"beforebegin,head\"><!--")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

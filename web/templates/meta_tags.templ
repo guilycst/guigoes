@@ -10,7 +10,6 @@ templ Meta(post *domain.Post) {
 	<meta property="og:url" content={ "https://guigoes.com" + post.Dir } hx-swap-oob="beforebegin:head"/>
 	<meta property="og:description" content={ post.Metadata.Description } hx-swap-oob="beforebegin:head"/>
 	<meta property="og:site_name" content="Guigoes" hx-swap-oob="beforebegin,head"/>
-	<meta property="fb:app_id" content="your_app_id" hx-swap-oob="beforebegin,head"/>
 	<!--  Twitter Tags -->
 	<meta name="twitter:title" content={ post.Metadata.Title } hx-swap-oob="beforebegin:head"/>
 	<meta name="twitter:description" content={ post.Metadata.Description } hx-swap-oob="beforebegin:head"/>
