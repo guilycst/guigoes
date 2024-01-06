@@ -10,7 +10,6 @@
 	animation-timing-function: ease;
 }
 
-
 .modal > .modal-underlay {
 	/* underlay takes up the entire viewport. This is only
 	required if you want to click to dismiss the popup */
@@ -75,6 +74,10 @@
 }
 
 .post p code {
+    @apply text-zinc-900;
+}
+
+.post li code {
     @apply text-zinc-900;
 }
 
