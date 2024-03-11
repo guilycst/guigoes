@@ -116,7 +116,7 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	query := bleve.NewQueryStringQuery("cute gopher")
+	query := bleve.NewQueryStringQuery("HTMX")
 	search := bleve.NewSearchRequest(query)
 	searchResults, err := blogIndex.Search(search)
 	if err != nil {

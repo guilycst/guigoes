@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 
 	"github.com/joho/godotenv"
 )
@@ -19,6 +20,10 @@ var (
 )
 
 func LoadEnvFile(filenames ...string) {
+	if len(filenames) > 0 {
+		log.Print("Loading env from ", strings.Join(filenames, ", "))
+	}
+
 	godotenv.Load(filenames...)
 	LoadEnvFromOS()
 }
@@ -29,10 +34,12 @@ func LoadEnvFromOS() {
 	BLEVE_IDX_PATH = os.Getenv("BLEVE_IDX_PATH")
 	SMTP_ENDPOINT = os.Getenv("SMTP_ENDPOINT")
 
-	var err error
-	SMTP_PORT, err = strconv.Atoi(os.Getenv("SMTP_PORT"))
-	if err != nil {
-		log.Println(err)
+	if SMTP_ENDPOINT != "" {
+		var err error
+		SMTP_PORT, err = strconv.Atoi(os.Getenv("SMTP_PORT"))
+		if err != nil {
+			log.Println(err)
+		}
 	}
 
 	SMTP_USR_NAME = os.Getenv("SMTP_USR_NAME")

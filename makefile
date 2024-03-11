@@ -32,3 +32,7 @@ index:
 	go run ./cmd/indexer/main.go
 track:
 	go run ./cmd/tracker/main.go
+
+rundocker:
+	docker build -t guigoes:latest .
+	docker run -p 8080:8080 --rm -it guigoes:latest

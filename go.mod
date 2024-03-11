@@ -42,7 +42,7 @@ require (
 )
 
 require (
-	github.com/a-h/templ v0.2.476
+	github.com/a-h/templ v0.2.513
 	github.com/blevesearch/bleve/v2 v2.3.10
 	github.com/bytedance/sonic v1.9.1 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect

@@ -1,0 +1,49 @@
+# flyctl launch added from .gitignore
+# If you prefer the allow list template instead of the deny list, see community template:
+# https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
+#
+# Binaries for programs and plugins
+**/*.exe
+**/*.exe~
+**/*.dll
+**/*.so
+**/*.dylib
+
+# Test binary, built with `go test -c`
+**/*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+**/*.out
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+
+# Go workspace file
+**/go.work
+**/**/git-log.track
+**/tmp
+**/web/dist/output.css
+**/posts.bleve
+**/.prod.env
+
+# flyctl launch added from deployments/cdk/.gitignore
+# Binaries for programs and plugins
+deployments/cdk/**/*.exe
+deployments/cdk/**/*.exe~
+deployments/cdk/**/*.dll
+deployments/cdk/**/*.so
+deployments/cdk/**/*.dylib
+
+# Test binary, built with `go test -c`
+deployments/cdk/**/*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+deployments/cdk/**/*.out
+
+# go.sum should be committed
+!deployments/cdk/**/go.sum
+
+# CDK asset staging directory
+deployments/cdk/**/.cdk.staging
+deployments/cdk/**/cdk.out
+fly.toml

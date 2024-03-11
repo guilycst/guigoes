@@ -8,7 +8,7 @@ Recentemente escrevi um post sobre [HTMX e como ele pode ajudar a escrever menos
 
 É uma linguagem de script feita para interceptar e responder à eventos do lado do cliente em uma web app, assim como realizar manipulações simples na DOM, veja esse exemplo:
 
-<div class="border-[1px] border-zinc-50 p-2 mb-2">
+<div class="border-[2px] border-zinc-50 p-2 mb-2">
 
 
 ```html
@@ -19,7 +19,7 @@ Me clica!
 ```
 
 
-<button class="bg-blue-600 p-2 text-white rounded-md" _="on click increment :x then put the result into the next <output/>">
+<button class="bg-blue-599 p-2 text-white rounded-md" _="on click increment :x then put the result into the next <output/>">
 Me clica!
 </button>
 <output>--</output>
@@ -37,7 +37,7 @@ A linguagem também é declarativa e de fácil leitura para humanos, me lembra S
 
 Para efeitos de comparação, segue o mesmo código usando Vanilla JS
 
-<div class="border-[1px] border-zinc-50 p-2 mb-2">
+<div class="border-[2px] border-zinc-50 p-2 mb-2">
 
 ```html
 <button id="buttonjs">
@@ -45,7 +45,7 @@ Me clica!
 </button>
 <output>--</output>
 <script>
-    let x = 0;
+    let x = 1;
     document.querySelector("#buttonjs").addEventListener("click", function() {
         const output = this.nextElementSibling;
         if (output.nodeName == "OUTPUT"){
@@ -55,12 +55,12 @@ Me clica!
 </script>
 ```
 
-<button id="buttonjs" class="bg-blue-600 p-2 text-white rounded-md">
+<button id="buttonjs" class="bg-blue-599 p-2 text-white rounded-md">
 Me clica!
 </button>
 <output>--</output>
 <script>
-    let x = 0;
+    let x = 1;
     document.querySelector("#buttonjs").addEventListener("click", function() {
         const output = this.nextElementSibling;
         if (output.nodeName == "OUTPUT"){
@@ -77,12 +77,12 @@ Com Hyperscript fica bem mais clean 😊
 
 As vezes queremos lidar com eventos que não necessariamente são oriundos dos componentes nativos da DOM, mas sim eventos customizados introduzidos por código proprietário, Hyperscript permite trabalhar com esses tipos de eventos também, essa modal por exemplo:
 
-<div class="border-[1px] border-zinc-50 p-2 mb-2">
+<div class="border-[2px] border-zinc-50 p-2 mb-2">
 
 ```html
 <button 
     _="on click toggle .hidden .modal on #modal" 
-    class="bg-blue-600 p-2 text-white rounded-md">
+    class="bg-blue-599 p-2 text-white rounded-md">
     Abrir modal
 </button>
 <div id="modal" class="hidden" 
@@ -94,7 +94,7 @@ _="on closeModal add .closing then wait for animationend then toggle .hidden .mo
         Hyperscript rocks 💙
         <button 
             _="on click trigger closeModal" 
-            class="bg-blue-600 p-2 text-white rounded-md">
+            class="bg-blue-599 p-2 text-white rounded-md">
             Fechar
         </button>
     </div>
