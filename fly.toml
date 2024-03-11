@@ -10,6 +10,10 @@ primary_region = 'gru'
 
 [env]
   PORT = '8080'
+  POSTS_PATH = '/usr/local/guigoes/posts/'
+  DIST_PATH = '/usr/local/guigoes/web/dist/'
+  BLEVE_IDX_PATH = '/usr/local/guigoes/blog.bleve'
+  GIN_MODE = 'release'
 
 [http_service]
   internal_port = 8080

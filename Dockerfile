@@ -43,7 +43,6 @@ RUN mkdir -p /usr/local/guigoes/
 WORKDIR /usr/local/guigoes
 
 # Copy the binary and static files to the production image from the builder stage.
-COPY --from=builder /usr/src/app/.flyio.env .env
 COPY --from=builder /usr/src/app/web web/
 COPY --from=builder /usr/src/app/posts posts/
 COPY --from=builder /usr/src/app/blog.bleve blog.bleve/
