@@ -33,7 +33,7 @@ RUN /usr/local/bin/tailwindcss -i web/css/input.css -o web/dist/output.css -m
 RUN templ generate
 RUN go run ./cmd/tracker/main.go
 RUN go run ./cmd/indexer/main.go
-RUN go build -gcflags "all=-N -l" -v -o /server ./cmd/server/main.go
+RUN go build -v -o /server ./cmd/server/main.go
 
 #Runtime
 FROM --platform=linux/amd64 alpine:${ALPINE_VERSION}
