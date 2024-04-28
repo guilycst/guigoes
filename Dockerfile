@@ -3,7 +3,7 @@ ARG ALPINE_VERSION=3.19
 ARG TAILWIND_VERSION="v3.3.5"
 
 #Build
-FROM golang:${GO_VERSION}-alpine${ALPINE_VERSION} as builder
+FROM --platform=linux/amd64 golang:${GO_VERSION}-alpine${ALPINE_VERSION} as builder
 
 WORKDIR /usr/src/app
 COPY go.mod go.sum ./
@@ -33,10 +33,10 @@ RUN /usr/local/bin/tailwindcss -i web/css/input.css -o web/dist/output.css -m
 RUN templ generate
 RUN go run ./cmd/tracker/main.go
 RUN go run ./cmd/indexer/main.go
-RUN go build -v -o /server ./cmd/server/main.go
+RUN go build -gcflags "all=-N -l" -v -o /server ./cmd/server/main.go
 
 #Runtime
-FROM alpine:${ALPINE_VERSION}
+FROM --platform=linux/amd64 alpine:${ALPINE_VERSION}
 
 
 RUN mkdir -p /usr/local/guigoes/

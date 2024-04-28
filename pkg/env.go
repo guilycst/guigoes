@@ -25,6 +25,7 @@ func LoadEnvFile(filenames ...string) {
 	}
 
 	godotenv.Load(filenames...)
+	log.Print("vars loaded", strings.Join(filenames, ", "))
 	LoadEnvFromOS()
 }
 

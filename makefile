@@ -35,4 +35,4 @@ track:
 
 rundocker:
 	docker build -t guigoes:latest .
-	docker run -p 8080:8080 --env-file .docker.env --rm -it guigoes:latest
+	docker run --platform linux/amd64 -p 8080:8080 --env-file .docker.env --rm -it guigoes:latest

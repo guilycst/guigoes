@@ -2,7 +2,7 @@
 TAILWIND_VERSION="v3.3.5"
 
 install_tailwindcss() {
-    curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/$TAILWIND_VERSION/download/tailwindcss-macos-arm64
+    wget https://github.com/tailwindlabs/tailwindcss/releases/download/$TAILWIND_VERSION/tailwindcss-macos-arm64
     chmod +x tailwindcss-macos-arm64
     mv tailwindcss-macos-arm64 /usr/local/bin/tailwindcss
 }
