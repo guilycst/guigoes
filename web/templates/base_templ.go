@@ -61,7 +61,7 @@ func Base(bs state.BaseState) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</main><link href=\"https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;1,300&amp;display=swap\" rel=\"stylesheet\" defer><script src=\"https://unpkg.com/hyperscript.org@0.9.12\"></script></body></html>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</main><link href=\"https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;1,300&amp;display=swap\" rel=\"stylesheet\" defer></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

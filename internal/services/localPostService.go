@@ -251,6 +251,6 @@ func getMeta(metaPath string) (*domain.Metadata, error) {
 	if err != nil {
 		return nil, err
 	}
-
+	meta.Thumb = path.Join("/assets", "thumb_"+path.Base(meta.Cover))
 	return meta, nil
 }

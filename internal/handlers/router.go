@@ -36,9 +36,7 @@ func NewGinRouter(ps ports.PostService) *GinRouter {
 func staticCacheMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// Apply the Cache-Control header to the static file
-		if strings.HasSuffix(c.Request.URL.Path, ".css") {
-			c.Header("Cache-Control", "private, max-age=86400")
-		}
+		c.Header("Cache-Control", "private, max-age=31536000")
 		// Continue to the next middleware or handler
 		c.Next()
 	}
@@ -49,14 +47,14 @@ func (gr GinRouter) registerRoutes() {
 	r.GET("/", gr.Index)
 	r.NoRoute(gr.NoRoute)
 	r.GET("/posts/:post", gr.Post)
-	r.GET("/posts/:post/assets/:asset", gr.PostAssetAbs)
-	r.GET("/posts/assets/:asset", gr.PostAsset)
 	r.GET("/about", gr.About)
 	r.POST("/search", gr.SearchPosts)
 	r.GET("/subscribe", gr.Subscribe)
 	r.POST("/subscribe", gr.SubscribeAdd)
 	//Static files that should be served at root
 	r.Use(staticCacheMiddleware())
+	r.GET("/posts/:post/assets/:asset", gr.PostAssetAbs)
+	r.GET("/posts/assets/:asset", gr.PostAsset)
 	r.StaticFile("/output.css", fmt.Sprintf("%s/output.css", pkg.DIST_PATH))
 	r.StaticFile("/site.webmanifest", fmt.Sprintf("%s/site.webmanifest", pkg.DIST_PATH))
 	r.StaticFile("/favicon.ico", fmt.Sprintf("%s/favicon.ico", pkg.DIST_PATH))
@@ -66,6 +64,7 @@ func (gr GinRouter) registerRoutes() {
 	r.StaticFile("/android-chrome-512x512.png", fmt.Sprintf("%s/android-chrome-512x512.png", pkg.DIST_PATH))
 	r.StaticFile("/android-chrome-192x192.png", fmt.Sprintf("%s/android-chrome-192x192.png", pkg.DIST_PATH))
 	r.StaticFile("/robots.txt", fmt.Sprintf("%s/robots.txt", pkg.DIST_PATH))
+	r.StaticFile("/about/about_profile.png", fmt.Sprintf("%s/about_profile.png", pkg.DIST_PATH))
 }
 
 func (gr GinRouter) About(c *gin.Context) {

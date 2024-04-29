@@ -4,14 +4,13 @@ go 1.21.4
 
 require (
 	github.com/alecthomas/chroma/v2 v2.2.0
-	github.com/aws/aws-lambda-go v1.42.0
-	github.com/awslabs/aws-lambda-go-api-proxy v0.16.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/golang-module/carbon/v2 v2.2.14
 	github.com/otiai10/copy v1.14.0
 	github.com/yuin/goldmark v1.6.0
 	github.com/yuin/goldmark-highlighting/v2 v2.0.0-20230729083705-37449abec8cc
 	go.abhg.dev/goldmark/anchor v0.1.1
+	golang.org/x/image v0.15.0
 )
 
 require (
@@ -69,7 +68,7 @@ require (
 	golang.org/x/crypto v0.14.0 // indirect
 	golang.org/x/net v0.17.0 // indirect
 	golang.org/x/sys v0.14.0 // indirect
-	golang.org/x/text v0.13.0 // indirect
+	golang.org/x/text v0.14.0 // indirect
 	google.golang.org/protobuf v1.30.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20200902074654-038fdea0a05b // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect

@@ -17,6 +17,7 @@ type Metadata struct {
 	Description     string   `json:"description"`
 	Tags            []string `json:"tags"`
 	Cover           string   `json:"cover"`
+	Thumb           string   `json:"thumb"`
 	CoverAlt        string   `json:"cover_alt"`
 	MdCoverPosition string   `json:"md_cover_position"`
 	CreatedAt       carbon.DateTime
