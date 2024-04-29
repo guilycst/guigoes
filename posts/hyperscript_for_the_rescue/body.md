@@ -159,3 +159,6 @@ Aqui só arranhei a superfície do que a linguagem é capaz, não deixe de visit
 
 Pode ser que em seu projeto também seja 😄
 
+```html
+<script src="https://unpkg.com/hyperscript.org@0.9.12"> </script>
+```
