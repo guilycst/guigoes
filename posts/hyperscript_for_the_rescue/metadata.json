@@ -1,0 +1,9 @@
+{
+    "title": "Quando não dá para fugir do JavaScript: Hyperscript te salva",
+    "description": "As vezes não tem jeito, você vai ter que usar JavaScript. Mas não se preocupe, o Hyperscript vai te ajudar a escrever menos código e deixar seu código mais legível." , 
+    "author": "Guilherme de Castro",
+    "tags": ["web", "frontend", "JS", "hyperscript"],
+    "cover": "/assets/js_headache.webp",
+    "cover_alt": "Dev de frente para o computador sofrendo com o JavaScript",
+    "render": ["fragment_01.md"]
+}

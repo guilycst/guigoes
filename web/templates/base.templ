@@ -9,7 +9,11 @@ templ Base(bs state.BaseState) {
 			<title>{ bs.Title }</title>
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			<meta name="description" content="A developer blog sharing insights, tutorials, and tips on programming and web development."/>
+			if bs.Post != nil {
+				@Meta(bs.Post)
+			} else {
+				<meta name="description" content="A developer blog sharing insights, tutorials, and tips on programming and web development."/>
+			}
 			<meta name="author" content="Guilherme de Castro"/>
 			<script src="https://unpkg.com/htmx.org@1.9.9" integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX" crossorigin="anonymous"></script>
 			<link rel="stylesheet" href="/output.css" defer/>
@@ -36,6 +40,7 @@ templ Base(bs state.BaseState) {
 								</form>
 								<a href="/" class="hidden md:block text-zinc-300 hover:bg-zinc-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
 								<a href="/about" hx-get="/about?fragment=1" hx-target="#main" class="hidden md:block text-zinc-300 hover:bg-zinc-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">About</a>
+								<a href="/subscribe" hx-get="/subscribe?modal=1" hx-target="body" hx-swap="beforeend" class="hidden md:block text-zinc-300 hover:bg-zinc-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Subscribe</a>
 							</div>
 						</div>
 					</div>
@@ -46,6 +51,7 @@ templ Base(bs state.BaseState) {
 						<div class="hidden group-hover:block bg-zinc-700 h-7"></div>
 						<a href="/" class="mw-full text-zinc-300 hover:bg-zinc-700 hover:text-white rounded-md text-sm pb-2 font-medium">Home</a>
 						<a href="/about" hx-get="/about?fragment=1" class="mt-2 text-zinc-300 hover:bg-zinc-700 hover:text-white rounded-md text-sm pb-2 font-medium" hx-target="#main">About</a>
+						<a href="/subscribe" hx-get="/subscribe?modal=1" hx-target="body" hx-swap="beforeend" hx-target="#main" class="mt-2 text-zinc-300 hover:bg-zinc-700 hover:text-white rounded-md text-sm pb-2 font-medium">Subscribe</a>
 					</div>
 				</div>
 			</nav>

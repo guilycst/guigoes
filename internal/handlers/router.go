@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"errors"
 	"fmt"
 	"log"
+	"net/mail"
 	"net/url"
 	"path/filepath"
 	"strings"
@@ -36,9 +36,7 @@ func NewGinRouter(ps ports.PostService) *GinRouter {
 func staticCacheMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// Apply the Cache-Control header to the static file
-		if strings.HasSuffix(c.Request.URL.Path, ".css") {
-			c.Header("Cache-Control", "private, max-age=86400")
-		}
+		c.Header("Cache-Control", "private, max-age=31536000")
 		// Continue to the next middleware or handler
 		c.Next()
 	}
@@ -47,13 +45,16 @@ func staticCacheMiddleware() gin.HandlerFunc {
 func (gr GinRouter) registerRoutes() {
 	r := gr.Engine
 	r.GET("/", gr.Index)
+	r.NoRoute(gr.NoRoute)
 	r.GET("/posts/:post", gr.Post)
-	r.GET("/posts/:post/assets/:asset", gr.PostAssetAbs)
-	r.GET("/posts/assets/:asset", gr.PostAsset)
 	r.GET("/about", gr.About)
 	r.POST("/search", gr.SearchPosts)
+	r.GET("/subscribe", gr.Subscribe)
+	r.POST("/subscribe", gr.SubscribeAdd)
 	//Static files that should be served at root
 	r.Use(staticCacheMiddleware())
+	r.GET("/posts/:post/assets/:asset", gr.PostAssetAbs)
+	r.GET("/posts/assets/:asset", gr.PostAsset)
 	r.StaticFile("/output.css", fmt.Sprintf("%s/output.css", pkg.DIST_PATH))
 	r.StaticFile("/site.webmanifest", fmt.Sprintf("%s/site.webmanifest", pkg.DIST_PATH))
 	r.StaticFile("/favicon.ico", fmt.Sprintf("%s/favicon.ico", pkg.DIST_PATH))
@@ -62,6 +63,8 @@ func (gr GinRouter) registerRoutes() {
 	r.StaticFile("/apple-touch-icon.png", fmt.Sprintf("%s/apple-touch-icon.png", pkg.DIST_PATH))
 	r.StaticFile("/android-chrome-512x512.png", fmt.Sprintf("%s/android-chrome-512x512.png", pkg.DIST_PATH))
 	r.StaticFile("/android-chrome-192x192.png", fmt.Sprintf("%s/android-chrome-192x192.png", pkg.DIST_PATH))
+	r.StaticFile("/robots.txt", fmt.Sprintf("%s/robots.txt", pkg.DIST_PATH))
+	r.StaticFile("/about/about_profile.png", fmt.Sprintf("%s/about_profile.png", pkg.DIST_PATH))
 }
 
 func (gr GinRouter) About(c *gin.Context) {
@@ -136,6 +139,30 @@ func (gr GinRouter) SearchPosts(c *gin.Context) {
 	c.Status(200)
 }
 
+func (gr GinRouter) Subscribe(c *gin.Context) {
+	subComponent := templates.Subscribe("")
+	modal := c.Query("modal")
+	if modal == "1" {
+		templates.Modal(subComponent).Render(c.Request.Context(), c.Writer)
+		c.Status(200)
+		return
+	}
+
+	subComponent.Render(c.Request.Context(), c.Writer)
+	c.Status(200)
+}
+func (gr GinRouter) SubscribeAdd(c *gin.Context) {
+	email := c.Request.FormValue("email")
+	addr, err := mail.ParseAddress(email)
+	if err != nil {
+		log.Printf("Bad email address %s\n", err)
+		c.AbortWithError(400, err)
+	}
+	log.Println("SUBSCRIBED:", email, addr)
+	templates.SubscribeOk("").Render(c.Request.Context(), c.Writer)
+	c.Status(200)
+}
+
 func (gr GinRouter) PostAsset(c *gin.Context) {
 	ref := c.Request.Header.Get("Referer")
 	if ref == "" {
@@ -156,8 +183,9 @@ func (gr GinRouter) PostAsset(c *gin.Context) {
 	assetPath, err := gr.PostSrv.GetPostAsset(postName, assetName)
 	if err != nil {
 		log.Println(err)
-		if errors.Is(err, &domain.AssetNotFoundError{}) {
+		if _, ok := err.(*domain.FSResourceNotFoundError); ok {
 			c.AbortWithError(404, err)
+			return
 		}
 		c.AbortWithError(500, err)
 		return
@@ -174,8 +202,9 @@ func (gr GinRouter) PostAssetAbs(c *gin.Context) {
 	assetPath, err := gr.PostSrv.GetPostAsset(postName, assetName)
 	if err != nil {
 		log.Println(err)
-		if errors.Is(err, &domain.AssetNotFoundError{}) {
+		if _, ok := err.(*domain.FSResourceNotFoundError); ok {
 			c.AbortWithError(404, err)
+			return
 		}
 		c.AbortWithError(500, err)
 		return
@@ -196,6 +225,11 @@ func (gr GinRouter) GetPostByName(postName string, frag bool, c *gin.Context) {
 	post, err := gr.PostSrv.GetPost(postName)
 	if err != nil {
 		log.Println(err)
+
+		if _, ok := err.(*domain.FSResourceNotFoundError); ok {
+			gr.NoRoute(c)
+			return
+		}
 		c.AbortWithError(500, err)
 		return
 	}
@@ -216,6 +250,7 @@ func (gr GinRouter) GetPostByName(postName string, frag bool, c *gin.Context) {
 		State: state.State{Language: getLanguage(c)},
 		Title: post.Metadata.Title,
 		Body:  postFragment,
+		Post:  post,
 	}).Render(c.Request.Context(), c.Writer)
 	c.Status(200)
 }
@@ -250,6 +285,23 @@ func (gr GinRouter) Index(c *gin.Context) {
 	idxState := state.IndexState{
 		State: state.State{Language: getLanguage(c)},
 		Posts: posts,
+	}
+
+	bs := state.BaseState{
+		Title: "Guigoes - Home",
+		Body:  templates.Index(idxState),
+	}
+
+	c.Header("Content-Type", "text/html; charset=utf-8")
+	templates.Base(bs).Render(c.Request.Context(), c.Writer)
+	c.Status(200)
+}
+
+func (gr GinRouter) NoRoute(c *gin.Context) {
+
+	idxState := state.IndexState{
+		State: state.State{Language: getLanguage(c)},
+		Posts: []*domain.Post{},
 	}
 
 	bs := state.BaseState{

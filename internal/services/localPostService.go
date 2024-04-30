@@ -90,10 +90,7 @@ func getPostWithContent(postName string, opt *ports.PostsContentOpt) (*domain.Po
 func (lps LocalPostService) GetPostAsset(postName string, assetName string) (string, error) {
 	var postAssetPath = pkg.POSTS_PATH + postName + "/assets/" + assetName
 	log.Println("Serving asset: ", postAssetPath)
-	if _, err := os.Stat(postAssetPath); err != nil {
-		if errors.Is(err, os.ErrNotExist) {
-			return "", &domain.AssetNotFoundError{}
-		}
+	if err := checkFileExists(postAssetPath); err != nil {
 		return "", err
 	}
 	return postAssetPath, nil
@@ -219,7 +216,23 @@ func getPost(meta *domain.Metadata, contentOpt *ports.PostsContentOpt) (*domain.
 	return post, nil
 }
 
+func checkFileExists(filePath string) error {
+	_, err := os.Stat(filePath)
+	if err == nil {
+		return nil
+	}
+
+	if errors.Is(err, os.ErrNotExist) {
+		return &domain.FSResourceNotFoundError{Msg: filePath, Err: err}
+	}
+	return err
+}
+
 func getMeta(metaPath string) (*domain.Metadata, error) {
+	if err := checkFileExists(metaPath); err != nil {
+		return nil, err
+	}
+
 	postName := filepath.Base(filepath.Dir(metaPath))
 	metaBytes, err := os.ReadFile(metaPath)
 	if err != nil {
@@ -238,6 +251,6 @@ func getMeta(metaPath string) (*domain.Metadata, error) {
 	if err != nil {
 		return nil, err
 	}
-
+	meta.Thumb = path.Join("/assets", "thumb_"+path.Base(meta.Cover))
 	return meta, nil
 }

@@ -1,22 +1,10 @@
 #!/bin/bash
 TAILWIND_VERSION="v3.3.5"
 
-install_aws_cdk() {
-    cecho "Installing aws-cdk"
-    npm install -g aws-cdk
-}
-
 install_tailwindcss() {
-    cecho "Installing tailwindcss $TAILWIND_VERSION"
-    curl -sLO "https://github.com/tailwindlabs/tailwindcss/releases/download/$TAILWIND_VERSION/tailwindcss-linux-x64"
-    chmod +x tailwindcss-linux-x64
-
-    BIN_DIR="/usr/local/bin"
-    if [ ! -d "$BIN_DIR" ];  then
-        mkdir $BIN_DIR
-    fi
-
-    mv tailwindcss-linux-x64 /usr/local/bin/tailwindcss
+    wget https://github.com/tailwindlabs/tailwindcss/releases/download/$TAILWIND_VERSION/tailwindcss-macos-arm64
+    chmod +x tailwindcss-macos-arm64
+    mv tailwindcss-macos-arm64 /usr/local/bin/tailwindcss
 }
 
 install_gotools() {
@@ -36,4 +24,3 @@ cecho() {
 
 install_tailwindcss
 install_gotools
-install_aws_cdk

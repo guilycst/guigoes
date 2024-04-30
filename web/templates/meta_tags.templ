@@ -1,0 +1,21 @@
+package templates
+
+import "github.com/guilycst/guigoes/internal/core/domain"
+
+templ Meta(post *domain.Post) {
+	<!--  FB + Open Graph Tags -->
+	<meta property="og:title" content={ post.Metadata.Title } hx-swap-oob="beforebegin,head"/>
+	<meta property="og:type" content="article" hx-swap-oob="beforebegin,head"/>
+	<meta property="og:image" content={ "https://guigoes.com" + post.Dir + post.Metadata.Cover } hx-swap-oob="beforebegin:head"/>
+	<meta property="og:url" content={ "https://guigoes.com" + post.Dir } hx-swap-oob="beforebegin:head"/>
+	<meta property="og:description" content={ post.Metadata.Description } hx-swap-oob="beforebegin:head"/>
+	<meta property="og:site_name" content="Guigoes" hx-swap-oob="beforebegin,head"/>
+	<!--  Twitter Tags -->
+	<meta name="twitter:title" content={ post.Metadata.Title } hx-swap-oob="beforebegin:head"/>
+	<meta name="twitter:description" content={ post.Metadata.Description } hx-swap-oob="beforebegin:head"/>
+	<meta name="twitter:card" content="summary" hx-swap-oob="beforebegin:head"/>
+	<meta name="twitter:image:alt" content={ post.Metadata.CoverAlt } hx-swap-oob="beforebegin:head"/>
+	<meta name="twitter:url" content={ "https://guigoes.com" + post.Dir + post.Metadata.Cover } hx-swap-oob="beforebegin:head"/>
+	<meta name="twitter:site" content="@guilycst" hx-swap-oob="beforebegin:head"/>
+	<meta name="twitter:creator" content="@guilycst" hx-swap-oob="beforebegin:head"/>
+}

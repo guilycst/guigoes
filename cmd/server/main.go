@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"path/filepath"
 
 	"github.com/guilycst/guigoes/internal/handlers"
@@ -13,7 +14,9 @@ import (
 var postsService ports.PostService
 
 func init() {
-	pkg.LoadEnvFile()
+	envfile := flag.String("envfile", ".env", "path to env file")
+	flag.Parse()
+	pkg.LoadEnvFile(*envfile)
 	postsService = services.NewLocalPostService()
 }
 

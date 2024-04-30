@@ -9,8 +9,10 @@ templ Index(is state.IndexState) {
 			//blog post
 			<div class="flex flex-col">
 				<div class="flex flex-col md:flex-row-reverse md:items-center">
-					<a href={ templ.URL(post.Dir) } hx-get={ post.Dir + "?fragment=1" } class="mb-2 max-h-[160px] md:max-h-[210px] md:mb-0 md:ml-[10px]" hx-target="#main">
-						<img class="max-h-[160px] md:max-h-[210px] w-full object-cover md:object-contain" src={ post.Dir + post.Metadata.Cover } alt={ post.Metadata.CoverAlt }/>
+					<a href={ templ.URL(post.Dir) } hx-get={ post.Dir + "?fragment=1" } hx-target="#main">
+						<div class="max-h-[160px] h-[160px] mb-[10px] md:w-[250px] md:h-[250px] md:max-h-[250px] md:mb-0 md:ml-[10px]">
+							<img class="w-full h-full object-cover md:object-scale-down" src={ post.Dir + post.Metadata.Thumb } alt={ post.Metadata.CoverAlt }/>
+						</div>
 					</a>
 					<div>
 						//post date
@@ -29,16 +31,16 @@ templ Index(is state.IndexState) {
 						</div>
 					</div>
 				</div>
-				<div class="text-sm font-thin">
+				<div class="text-sm font-thin text-pretty mb-[10px] mt-[10px]">
 					for _, tag := range post.Metadata.Tags {
 						//post tags
-						<span class="mr-[5px] rounded-full bg-zinc-950 px-[8px]">{ tag }</span>
+						<span class="mr-[5px] rounded-full bg-zinc-950 px-[8px] text-pretty">{ tag }</span>
 					}
 				</div>
 			</div>
 			if i != len(is.Posts)-1 {
 				//post separator
-				<hr class="my-[10px] border-zinc-300"/>
+				<hr class="mt-[10px] mb-[20px] border-zinc-300"/>
 			}
 		}
 		if len(is.Posts) == 0 {

@@ -2,13 +2,82 @@
 @tailwind components;
 @tailwind utilities;
 
+.modal {
+    @apply fixed top-0 bottom-0 left-0 right-0 z-[1000] flex flex-col items-center;
+    /* Animate when opening */
+	animation-name: fadeIn;
+	animation-duration:150ms;
+	animation-timing-function: ease;
+}
+
+.modal > .modal-underlay {
+	/* underlay takes up the entire viewport. This is only
+	required if you want to click to dismiss the popup */
+	position: absolute;
+	z-index: -1;
+	top:0px;
+	bottom:0px;
+	left: 0px;
+	right: 0px;
+
+    @apply absolute -z-[1] top-0 bottom-0 left-0 right-0 opacity-25 bg-zinc-600;
+}
+
+.modal > .modal-content {
+    @apply mt-[10vh] w-[80%] max-w-[600px] rounded-[8px] bg-zinc-950 p-[20px];
+
+	/* Animate when opening */
+	animation-name:zoomIn;
+	animation-duration:150ms;
+	animation-timing-function: ease;
+}
+
+.modal.closing {
+	/* Animate when closing */
+	animation-name: fadeOut;
+	animation-duration:150ms;
+	animation-timing-function: ease;
+}
+
+.modal.closing > .modal-content {
+	/* Animate when closing */
+	animation-name: zoomOut;
+	animation-duration:150ms;
+	animation-timing-function: ease;
+}
+
+@keyframes fadeIn {
+	0% {opacity: 0;}
+	100% {opacity: 1;}
+} 
+
+@keyframes fadeOut {
+	0% {opacity: 1;}
+	100% {opacity: 0;}
+} 
+
+@keyframes zoomIn {
+	0% {transform: scale(0.9);}
+	100% {transform: scale(1);}
+} 
+
+@keyframes zoomOut {
+	0% {transform: scale(1);}
+	100% {transform: scale(0.9);}
+} 
+
 .post {}
 
 .post a {
     @apply text-blue-700;
+    word-break: break-all
 }
 
 .post p code {
+    @apply text-zinc-900;
+}
+
+.post li code {
     @apply text-zinc-900;
 }
 
