@@ -84,7 +84,7 @@ func (sr *StandardRouter) registerRoutes() {
 
 	mux.HandleFunc("GET /posts/{post}/assets/{asset}", sr.PostAssetAbs)
 	mux.HandleFunc("GET /posts/assets/{asset}", sr.PostAsset)
-	mux.HandleFunc("GET /output.css", sr.StaticFile)
+	mux.HandleFunc("GET /output.css", sr.StaticFileAtomic("text/css; charset=utf-8"))
 	mux.HandleFunc("GET /site.webmanifest", sr.StaticFile)
 	mux.HandleFunc("GET /favicon.ico", sr.StaticFile)
 	mux.HandleFunc("GET /favicon-32x32.png", sr.StaticFile)
@@ -107,6 +107,31 @@ func (sr *StandardRouter) StaticFile(w http.ResponseWriter, r *http.Request) {
 	assetPath = filepath.Clean(assetPath)
 	// Serve the file from the specified directory
 	http.ServeFile(w, r, filepath.Join(pkg.DIST_PATH, filepath.Base(assetPath)))
+}
+
+func (sr *StandardRouter) StaticFileAtomic(contentType string) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		assetPath := r.URL.Path
+		// Make sure filePath is clean to avoid path traversal attacks
+		assetPath = filepath.Clean(assetPath)
+		assetPath = filepath.Join(pkg.DIST_PATH, filepath.Base(assetPath))
+		f, err := os.ReadFile(assetPath)
+		if err != nil {
+			slog.Error("Error reading file from disk", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		w.Header().Set("Content-Type", contentType)
+		_, err = w.Write(f)
+		if err != nil {
+			slog.Error("Error writing file to response", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		w.WriteHeader(http.StatusOK)
+	}
 }
 
 func (sr *StandardRouter) About(w http.ResponseWriter, r *http.Request) {

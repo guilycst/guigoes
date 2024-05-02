@@ -4,6 +4,7 @@ import (
 	"compress/gzip"
 	"log/slog"
 	"net/http"
+	"strings"
 )
 
 func CacheControl(next http.Handler) http.Handler {
@@ -29,11 +30,24 @@ func PanicRecover(next http.Handler) http.Handler {
 
 type gzipResponseWriter struct {
 	http.ResponseWriter
+	*http.Request
 }
 
 func (w *gzipResponseWriter) Write(b []byte) (int, error) {
+	ct := w.Header().Get("Content-Type")
+	if ct == "" {
+		ct = http.DetectContentType(b)
+	}
+
+	if !strings.Contains(ct, "text") && !strings.Contains(ct, "json") && !strings.Contains(ct, "javascript") {
+		return w.ResponseWriter.Write(b)
+	}
+
+	w.Header().Set("Content-Encoding", "gzip")
+
 	gzipWriter, _ := gzip.NewWriterLevel(w.ResponseWriter, gzip.BestSpeed)
 	defer gzipWriter.Close()
+
 	return gzipWriter.Write(b)
 }
 
@@ -47,8 +61,11 @@ func (w *gzipResponseWriter) Header() http.Header {
 
 func Gzip(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Encoding", "gzip")
-		w = &gzipResponseWriter{ResponseWriter: w}
+		if !strings.Contains(r.Header.Get("Accept-Encoding"), "gzip") {
+			next.ServeHTTP(w, r)
+			return
+		}
+		w = &gzipResponseWriter{ResponseWriter: w, Request: r}
 		next.ServeHTTP(w, r)
 	})
 }
