@@ -13,6 +13,7 @@ import (
 	"github.com/guilycst/guigoes/internal/core/domain"
 	"github.com/guilycst/guigoes/internal/ports"
 	"github.com/guilycst/guigoes/pkg"
+	"github.com/guilycst/guigoes/pkg/middleware"
 	"github.com/guilycst/guigoes/web/templates"
 	"github.com/guilycst/guigoes/web/templates/state"
 )
@@ -32,27 +33,6 @@ func NewStandardRouter(ps ports.PostService) *StandardRouter {
 	r.registerRoutes()
 
 	return r
-}
-
-func StaticCacheMiddleware(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Cache-Control", "private, max-age=31536000")
-		next.ServeHTTP(w, r)
-	})
-}
-
-func RecoverMiddleware(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		//recover from panic
-		defer func() {
-			if r := recover(); r != nil {
-				slog.Error("Recovered from panic:", r)
-				http.Error(w, "Internal server error", http.StatusInternalServerError)
-			}
-		}()
-
-		next.ServeHTTP(w, r)
-	})
 }
 
 type MiddlewareMux struct {
@@ -89,7 +69,7 @@ func (mm *MiddlewareMux) Clone() *MiddlewareMux {
 
 func (sr *StandardRouter) registerRoutes() {
 	mux := newMiddlewareMux(sr.handler)
-	mux.Use(RecoverMiddleware)
+	mux.Use(middleware.PanicRecover, middleware.Gzip)
 
 	mux.HandleFunc("GET /", sr.Index)
 	mux.HandleFunc("GET /posts/{post}", sr.Post)
@@ -100,7 +80,7 @@ func (sr *StandardRouter) registerRoutes() {
 
 	//those should have a cache control header
 	mux = mux.Clone()
-	mux.Use(StaticCacheMiddleware)
+	mux.Use(middleware.CacheControl)
 
 	mux.HandleFunc("GET /posts/{post}/assets/{asset}", sr.PostAssetAbs)
 	mux.HandleFunc("GET /posts/assets/{asset}", sr.PostAsset)

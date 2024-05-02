@@ -26,17 +26,5 @@ func main() {
 	copy.Copy(pkg.BLEVE_IDX_PATH, idxTmp)
 	pkg.BLEVE_IDX_PATH = idxTmp
 
-	// mux := http.NewServeMux()
-
-	// // Register the routes and handlers
-	// mux.Handle("/", &homeHandler{})
-
-	// Run the server
 	http.ListenAndServe(":8080", stdhdl.NewStandardRouter(postsService))
-}
-
-type homeHandler struct{}
-
-func (h *homeHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("This is my home page"))
 }
