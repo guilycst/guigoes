@@ -9,6 +9,9 @@ templ Base(bs state.BaseState) {
 			<title>{ bs.Title }</title>
 			<meta charset="UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<link rel="preconnect" href="https://fonts.googleapis.com"/>
+			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+			<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;1,300&display=optional" rel="stylesheet"/>
 			if bs.Post != nil {
 				@Meta(bs.Post)
 			} else {
@@ -21,8 +24,6 @@ templ Base(bs state.BaseState) {
 			<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
 			<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
 			<link rel="manifest" href="/site.webmanifest"/>
-			<link rel="preconnect" href="https://fonts.googleapis.com" defer/>
-			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin defer/>
 		</head>
 		<body class="bg-zinc-900 text-zinc-300 text-xl">
 			<nav class="px-2 flex flex-row items-center bg-zinc-950">
@@ -58,7 +59,6 @@ templ Base(bs state.BaseState) {
 			<main id="main" class="flex flex-col gap-4 place-content-center mb-10">
 				@bs.Body
 			</main>
-			<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;1,300&display=swap" rel="stylesheet" defer/>
 		</body>
 	</html>
 }
