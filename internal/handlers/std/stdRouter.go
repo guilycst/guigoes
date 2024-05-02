@@ -85,14 +85,14 @@ func (sr *StandardRouter) registerRoutes() {
 	mux.HandleFunc("GET /posts/{post}/assets/{asset}", sr.PostAssetAbs)
 	mux.HandleFunc("GET /posts/assets/{asset}", sr.PostAsset)
 	mux.HandleFunc("GET /output.css", sr.StaticFileAtomic("text/css; charset=utf-8"))
-	mux.HandleFunc("GET /site.webmanifest", sr.StaticFile)
+	mux.HandleFunc("GET /site.webmanifest", sr.StaticFileAtomic("text/plain; charset=utf-8"))
 	mux.HandleFunc("GET /favicon.ico", sr.StaticFile)
 	mux.HandleFunc("GET /favicon-32x32.png", sr.StaticFile)
 	mux.HandleFunc("GET /favicon-16x16.png", sr.StaticFile)
 	mux.HandleFunc("GET /apple-touch-icon.png", sr.StaticFile)
 	mux.HandleFunc("GET /android-chrome-512x512.png", sr.StaticFile)
 	mux.HandleFunc("GET /android-chrome-192x192.png", sr.StaticFile)
-	mux.HandleFunc("GET /robots.txt", sr.StaticFile)
+	mux.HandleFunc("GET /robots.txt", sr.StaticFileAtomic("text/plain; charset=utf-8"))
 	mux.HandleFunc("GET /about/about_profile.png", sr.StaticFile)
 
 }
