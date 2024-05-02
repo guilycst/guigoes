@@ -1,4 +1,4 @@
-ARG GO_VERSION=1.22.1
+ARG GO_VERSION=1.22.2
 ARG ALPINE_VERSION=3.19
 ARG TAILWIND_VERSION="v3.3.5"
 
@@ -33,7 +33,7 @@ RUN /usr/local/bin/tailwindcss -i web/css/input.css -o web/dist/output.css -m
 RUN templ generate
 RUN go run ./cmd/tracker/main.go
 RUN go run ./cmd/indexer/main.go
-RUN go build -v -o /server ./cmd/server/main.go
+RUN go build -v -o /server ./cmd/server_stdlib/main.go
 
 #Runtime
 FROM --platform=linux/amd64 alpine:${ALPINE_VERSION}

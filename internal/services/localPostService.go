@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"log"
+	"log/slog"
 	"os"
 	"path"
 	"path/filepath"
@@ -89,7 +90,7 @@ func getPostWithContent(postName string, opt *ports.PostsContentOpt) (*domain.Po
 
 func (lps LocalPostService) GetPostAsset(postName string, assetName string) (string, error) {
 	var postAssetPath = pkg.POSTS_PATH + postName + "/assets/" + assetName
-	log.Println("Serving asset: ", postAssetPath)
+	slog.Info("Serving asset", postAssetPath, "")
 	if err := checkFileExists(postAssetPath); err != nil {
 		return "", err
 	}
@@ -172,7 +173,7 @@ func setPostGitTrackingInfo(postName string, meta *domain.Metadata) error {
 	if err != nil || len(track) == 0 {
 		meta.CreatedAt = carbon.Now().ToDateTimeStruct()
 		meta.UpdatedAt = carbon.Now().ToDateTimeStruct()
-		log.Println(err)
+		slog.Error("Error reading git-log.track file: ", err)
 		return nil
 	}
 
@@ -244,7 +245,7 @@ func getMeta(metaPath string) (*domain.Metadata, error) {
 	}
 	err = json.Unmarshal(metaBytes, meta)
 	if err != nil {
-		log.Println("Invalid metadata.json: ", metaPath, err)
+		slog.Error("Invalid metadata.json: ", metaPath, err)
 	}
 
 	err = setPostGitTrackingInfo(postName, meta)

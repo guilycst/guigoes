@@ -1,8 +1,9 @@
-package handlers
+package ginhdl
 
 import (
 	"fmt"
 	"log"
+	"log/slog"
 	"net/mail"
 	"net/url"
 	"path/filepath"
@@ -93,7 +94,7 @@ func (gr GinRouter) SearchPosts(c *gin.Context) {
 		if ref != "" {
 			url, err := url.Parse(ref)
 			if err != nil {
-				log.Println(err)
+				slog.Error("Error parsing URL:", err)
 				c.AbortWithError(500, err)
 				return
 			}
@@ -107,7 +108,7 @@ func (gr GinRouter) SearchPosts(c *gin.Context) {
 
 		posts, err := gr.PostSrv.Posts(nil)
 		if err != nil {
-			log.Println(err)
+			slog.Error("Error retrieving posts:", err)
 			c.AbortWithError(500, err)
 			return
 		}
@@ -124,7 +125,7 @@ func (gr GinRouter) SearchPosts(c *gin.Context) {
 
 	posts, err := gr.PostSrv.SearchPosts(search)
 	if err != nil {
-		log.Println(err)
+		slog.Error("Error searching posts:", err)
 		c.AbortWithError(500, err)
 		return
 	}
@@ -158,7 +159,7 @@ func (gr GinRouter) SubscribeAdd(c *gin.Context) {
 		log.Printf("Bad email address %s\n", err)
 		c.AbortWithError(400, err)
 	}
-	log.Println("SUBSCRIBED:", email, addr)
+	slog.Info("SUBSCRIBED:", email, addr)
 	templates.SubscribeOk("").Render(c.Request.Context(), c.Writer)
 	c.Status(200)
 }
@@ -172,7 +173,7 @@ func (gr GinRouter) PostAsset(c *gin.Context) {
 
 	url, err := url.Parse(ref)
 	if err != nil {
-		log.Println(err)
+		slog.Error("Error parsing URL:", err)
 		c.AbortWithError(500, err)
 		return
 	}
@@ -182,7 +183,7 @@ func (gr GinRouter) PostAsset(c *gin.Context) {
 
 	assetPath, err := gr.PostSrv.GetPostAsset(postName, assetName)
 	if err != nil {
-		log.Println(err)
+		slog.Error("Error retrieving post asset:", err)
 		if _, ok := err.(*domain.FSResourceNotFoundError); ok {
 			c.AbortWithError(404, err)
 			return
@@ -191,7 +192,7 @@ func (gr GinRouter) PostAsset(c *gin.Context) {
 		return
 	}
 
-	log.Println("Serving asset: ", assetPath)
+	slog.Debug("Serving asset: ", assetPath)
 	c.File(assetPath)
 	c.Status(200)
 }
@@ -201,7 +202,7 @@ func (gr GinRouter) PostAssetAbs(c *gin.Context) {
 	assetName := c.Param("asset")
 	assetPath, err := gr.PostSrv.GetPostAsset(postName, assetName)
 	if err != nil {
-		log.Println(err)
+		slog.Error("Error retrieving post asset:", err)
 		if _, ok := err.(*domain.FSResourceNotFoundError); ok {
 			c.AbortWithError(404, err)
 			return
@@ -224,7 +225,7 @@ func (gr GinRouter) Post(c *gin.Context) {
 func (gr GinRouter) GetPostByName(postName string, frag bool, c *gin.Context) {
 	post, err := gr.PostSrv.GetPost(postName)
 	if err != nil {
-		log.Println(err)
+		slog.Error("Error retrieving post:", err)
 
 		if _, ok := err.(*domain.FSResourceNotFoundError); ok {
 			gr.NoRoute(c)
@@ -277,7 +278,7 @@ func (gr GinRouter) Index(c *gin.Context) {
 
 	posts, err := gr.PostSrv.Posts(nil)
 	if err != nil {
-		log.Println(err)
+		slog.Error("Error retrieving posts:", err)
 		c.AbortWithError(500, err)
 		return
 	}
