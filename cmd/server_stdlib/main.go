@@ -2,9 +2,10 @@ package main
 
 import (
 	"flag"
+	"net/http"
 	"path/filepath"
 
-	gin "github.com/guilycst/guigoes/internal/handlers/gin"
+	stdhdl "github.com/guilycst/guigoes/internal/handlers/std"
 	"github.com/guilycst/guigoes/internal/ports"
 	"github.com/guilycst/guigoes/internal/services"
 	"github.com/guilycst/guigoes/pkg"
@@ -24,6 +25,18 @@ func main() {
 	idxTmp := "/tmp/" + filepath.Base(pkg.BLEVE_IDX_PATH) + "/"
 	copy.Copy(pkg.BLEVE_IDX_PATH, idxTmp)
 	pkg.BLEVE_IDX_PATH = idxTmp
-	r := gin.NewGinRouter(postsService)
-	r.Engine.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+
+	// mux := http.NewServeMux()
+
+	// // Register the routes and handlers
+	// mux.Handle("/", &homeHandler{})
+
+	// Run the server
+	http.ListenAndServe(":8080", stdhdl.NewStandardRouter(postsService))
+}
+
+type homeHandler struct{}
+
+func (h *homeHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("This is my home page"))
 }

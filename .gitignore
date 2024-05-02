@@ -24,3 +24,6 @@ tmp
 web/dist/output.css
 posts.bleve
 .prod.env
+
+# Ignore .DS_Store files on all directories
+**/.DS_Store

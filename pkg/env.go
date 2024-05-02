@@ -2,6 +2,7 @@ package pkg
 
 import (
 	"log"
+	"log/slog"
 	"os"
 	"strconv"
 	"strings"
@@ -39,7 +40,7 @@ func LoadEnvFromOS() {
 		var err error
 		SMTP_PORT, err = strconv.Atoi(os.Getenv("SMTP_PORT"))
 		if err != nil {
-			log.Println(err)
+			slog.Error("Failed to convert SMTP_PORT to int", err)
 		}
 	}
 
