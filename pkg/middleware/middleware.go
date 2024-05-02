@@ -32,7 +32,9 @@ type gzipResponseWriter struct {
 }
 
 func (w *gzipResponseWriter) Write(b []byte) (int, error) {
-	return gzip.NewWriter(w.ResponseWriter).Write(b)
+	gzipWriter, _ := gzip.NewWriterLevel(w.ResponseWriter, gzip.BestSpeed)
+	defer gzipWriter.Close()
+	return gzipWriter.Write(b)
 }
 
 func (w *gzipResponseWriter) WriteHeader(statusCode int) {
