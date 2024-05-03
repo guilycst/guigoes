@@ -16,7 +16,6 @@ run:
 	make tailwindcss
 	air
 tgen:
-	templ fmt ./web/templates
 	templ generate
 deploy:
 	make index
