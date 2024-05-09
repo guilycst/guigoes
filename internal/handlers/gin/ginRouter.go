@@ -192,7 +192,7 @@ func (gr GinRouter) PostAsset(c *gin.Context) {
 		return
 	}
 
-	slog.Debug("Serving asset: ", assetPath)
+	slog.Debug("Serving asset: ", assetPath, "")
 	c.File(assetPath)
 	c.Status(200)
 }
