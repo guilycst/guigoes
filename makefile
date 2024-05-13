@@ -31,7 +31,9 @@ index:
 	go run ./cmd/indexer/main.go
 track:
 	go run ./cmd/tracker/main.go
-
 rundocker:
 	docker build -t guigoes:latest .
 	docker run --platform linux/amd64 -p 8080:8080 --env-file .docker.env --rm -it guigoes:latest
+coverage:
+	go test -coverprofile=coverage.out ./...
+	go tool cover -html=coverage.out

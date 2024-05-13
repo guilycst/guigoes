@@ -38,6 +38,8 @@ require (
 	github.com/mschoch/smat v0.2.0 // indirect
 	go.etcd.io/bbolt v1.3.7 // indirect
 	golang.org/x/sync v0.3.0 // indirect
+	golang.org/x/tools v0.13.0 // indirect
+	golang.org/x/tools/cmd/cover v0.1.0-deprecated // indirect
 )
 
 require (
