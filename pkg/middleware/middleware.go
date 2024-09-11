@@ -2,9 +2,11 @@ package middleware
 
 import (
 	"compress/gzip"
+	"fmt"
 	"log/slog"
 	"net/http"
 	"strings"
+	"sync"
 )
 
 func CacheControl(next http.Handler) http.Handler {
@@ -33,6 +35,41 @@ type gzipResponseWriter struct {
 	*http.Request
 }
 
+type GzipWriterPool struct {
+	pool sync.Pool
+}
+
+func (gwp *GzipWriterPool) Get(w http.ResponseWriter) *gzip.Writer {
+	gw := gwp.pool.Get()
+	if gw == nil {
+		var err error
+		gw, err = gzip.NewWriterLevel(w, gzip.BestSpeed)
+		if err != nil {
+			panic(err)
+		}
+		slog.Debug("New gzip writer created")
+		return gw.(*gzip.Writer)
+	}
+	gw.(*gzip.Writer).Reset(w)
+	return gw.(*gzip.Writer)
+}
+
+func (gwp *GzipWriterPool) Put(gw *gzip.Writer) {
+	err := gw.Close()
+	if err != nil {
+		panic(err)
+	}
+	gwp.pool.Put(gw)
+}
+
+var gzPool = &GzipWriterPool{
+	pool: sync.Pool{
+		New: func() interface{} {
+			return nil
+		},
+	},
+}
+
 func (w *gzipResponseWriter) Write(b []byte) (int, error) {
 	ct := w.Header().Get("Content-Type")
 	if ct == "" {
@@ -45,9 +82,8 @@ func (w *gzipResponseWriter) Write(b []byte) (int, error) {
 
 	w.Header().Set("Content-Encoding", "gzip")
 
-	gzipWriter, _ := gzip.NewWriterLevel(w.ResponseWriter, gzip.BestSpeed)
-	defer gzipWriter.Close()
-
+	gzipWriter := gzPool.Get(w.ResponseWriter)
+	defer gzPool.Put(gzipWriter)
 	return gzipWriter.Write(b)
 }
 
@@ -67,5 +103,27 @@ func Gzip(next http.Handler) http.Handler {
 		}
 		w = &gzipResponseWriter{ResponseWriter: w, Request: r}
 		next.ServeHTTP(w, r)
+	})
+}
+
+type statusCodeExposingWriter struct {
+	http.ResponseWriter
+	statusCode int
+}
+
+func (w *statusCodeExposingWriter) WriteHeader(statusCode int) {
+	w.statusCode = statusCode
+	w.ResponseWriter.WriteHeader(statusCode)
+}
+
+func wrapResponseWriter(w http.ResponseWriter) http.ResponseWriter {
+	return &statusCodeExposingWriter{w, http.StatusOK}
+}
+
+func Log(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w = wrapResponseWriter(w)
+		next.ServeHTTP(w, r)
+		slog.Info(fmt.Sprint(r.Method, " ", r.URL.String(), " "), "code", w.(*statusCodeExposingWriter).statusCode)
 	})
 }

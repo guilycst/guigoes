@@ -18,6 +18,7 @@ var (
 	SMTP_PORT      int
 	SMTP_USR_NAME  string
 	SMTP_USR_PW    string
+	PPROF          string
 )
 
 func LoadEnvFile(filenames ...string) {
@@ -35,6 +36,7 @@ func LoadEnvFromOS() {
 	DIST_PATH = os.Getenv("DIST_PATH")
 	BLEVE_IDX_PATH = os.Getenv("BLEVE_IDX_PATH")
 	SMTP_ENDPOINT = os.Getenv("SMTP_ENDPOINT")
+	PPROF = os.Getenv("PPROF")
 
 	if SMTP_ENDPOINT != "" {
 		var err error

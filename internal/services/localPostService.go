@@ -18,10 +18,18 @@ import (
 	"github.com/guilycst/guigoes/pkg"
 )
 
-type LocalPostService struct{}
+type LocalPostService struct {
+	index bleve.Index
+}
 
 func NewLocalPostService() ports.PostService {
-	return &LocalPostService{}
+	index, err := bleve.Open(pkg.BLEVE_IDX_PATH)
+	if err != nil {
+		panic(err)
+	}
+	return &LocalPostService{
+		index: index,
+	}
 }
 
 var defaultOpts = &ports.PostsOptions{
@@ -98,16 +106,11 @@ func (lps LocalPostService) GetPostAsset(postName string, assetName string) (str
 }
 
 func (lps LocalPostService) SearchPosts(term string) ([]*domain.Post, error) {
-	index, err := bleve.Open(pkg.BLEVE_IDX_PATH)
-	if err != nil {
-		return nil, err
-	}
-	defer index.Close()
 
 	query := bleve.NewMatchQuery(term)
 	query.Fuzziness = 2
 	search := bleve.NewSearchRequest(query)
-	result, err := index.Search(search)
+	result, err := lps.index.Search(search)
 	if err != nil {
 		return nil, err
 	}

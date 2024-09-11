@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"path/filepath"
 
+	//_ "net/http/pprof"
+
 	stdhdl "github.com/guilycst/guigoes/internal/handlers/std"
 	"github.com/guilycst/guigoes/internal/ports"
 	"github.com/guilycst/guigoes/internal/services"
@@ -26,5 +28,7 @@ func main() {
 	copy.Copy(pkg.BLEVE_IDX_PATH, idxTmp)
 	pkg.BLEVE_IDX_PATH = idxTmp
 
-	http.ListenAndServe(":8080", stdhdl.NewStandardRouter(postsService))
+	if err := http.ListenAndServe(":8080", stdhdl.NewStandardRouter(postsService)); err != nil {
+		panic(err)
+	}
 }

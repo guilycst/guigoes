@@ -24,7 +24,10 @@ type StandardRouter struct {
 }
 
 func NewStandardRouter(ps ports.PostService) *StandardRouter {
-	mux := http.NewServeMux()
+	mux := http.DefaultServeMux
+	if pkg.PPROF != "1" {
+		mux = http.NewServeMux()
+	}
 	r := &StandardRouter{
 		PostSrv: ps,
 		handler: mux,
@@ -69,7 +72,7 @@ func (mm *MiddlewareMux) Clone() *MiddlewareMux {
 
 func (sr *StandardRouter) registerRoutes() {
 	mux := newMiddlewareMux(sr.handler)
-	mux.Use(middleware.PanicRecover, middleware.Gzip)
+	mux.Use(middleware.PanicRecover, middleware.Gzip, middleware.Log)
 
 	mux.HandleFunc("GET /", sr.Index)
 	mux.HandleFunc("GET /posts/{post}", sr.Post)
