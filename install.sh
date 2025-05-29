@@ -1,10 +1,11 @@
 #!/bin/bash
 TAILWIND_VERSION="v3.3.5"
+TAILWIND_BIN="tailwindcss-linux-x64"
 
 install_tailwindcss() {
-    wget https://github.com/tailwindlabs/tailwindcss/releases/download/$TAILWIND_VERSION/tailwindcss-macos-arm64
-    chmod +x tailwindcss-macos-arm64
-    mv tailwindcss-macos-arm64 /usr/local/bin/tailwindcss
+    wget https://github.com/tailwindlabs/tailwindcss/releases/download/$TAILWIND_VERSION/$TAILWIND_BIN
+    chmod +x $TAILWIND_BIN
+    sudo mv $TAILWIND_BIN /usr/local/bin/tailwindcss
 }
 
 install_gotools() {

@@ -1,6 +1,6 @@
-install:
+install_linux:
 	chmod +x install.sh
-	sudo ./install.sh
+	./install.sh
 	go mod tidy
 	go mod download
 tailwindcss:
